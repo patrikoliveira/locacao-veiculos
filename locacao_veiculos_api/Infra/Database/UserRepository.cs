@@ -1,3 +1,9 @@
+using System.Linq;
+using System.Threading.Tasks;
+using locacao_veiculos_api.Domain.Entities;
+using locacao_veiculos_api.Infra.Database;
+using Microsoft.EntityFrameworkCore;
+
 namespace locacao_veiculos_api.Infra.Database
 {
     public class UserRepository
@@ -6,6 +12,10 @@ namespace locacao_veiculos_api.Infra.Database
         public UserRepository(EntityContext context)
         {
           this.context = context;
+        }
+        public async Task<User> FindByLoginAndPassword(string login, string password)
+        {
+            return await context.Users.Where(u => u.login == login && u.password == password).FirstOrDefaultAsync();
         }
     }
 }
