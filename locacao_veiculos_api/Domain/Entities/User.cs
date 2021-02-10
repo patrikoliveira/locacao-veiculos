@@ -12,5 +12,6 @@ namespace locacao_veiculos_api.Domain.Entities
         public string login {get;set;}
         [Required]
         public string password {get;set;}
+        public UserType userType {get;set;}
     }
 }
