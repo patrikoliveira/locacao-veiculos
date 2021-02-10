@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace locacao_veiculos_api.Domain.Entities
 {
+    [Table("users")]
     public class User
     {
         [Key]
