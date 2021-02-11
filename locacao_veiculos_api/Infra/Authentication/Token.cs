@@ -6,6 +6,7 @@ using System;
 using Microsoft.IdentityModel.Tokens;
 using locacao_veiculos_api.Domain.Entities;
 using locacao_veiculos_api.Domain.Authentication;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace locacao_veiculos_api.Infra.Authentication
 {

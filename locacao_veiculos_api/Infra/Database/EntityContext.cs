@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using locacao_veiculos_api.Domain.Entities;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using System;
 
 namespace locacao_veiculos_api.Infra.Database
 {
