@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using locacao_veiculos_api.Domain.Entities;
 
 namespace locacao_veiculos_api.Infra.Database
 {

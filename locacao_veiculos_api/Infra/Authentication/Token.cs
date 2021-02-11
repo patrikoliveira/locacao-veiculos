@@ -5,7 +5,7 @@ using System.IO;
 using System;
 using Microsoft.IdentityModel.Tokens;
 using locacao_veiculos_api.Domain.Entities;
-using locacao_veiculos_api.Infra.Authentication;
+using locacao_veiculos_api.Domain.Authentication;
 
 namespace locacao_veiculos_api.Infra.Authentication
 {
@@ -20,8 +20,8 @@ namespace locacao_veiculos_api.Infra.Authentication
 				var tokenDescriptor = new SecurityTokenDescriptor()
 				{
 					Subject = new ClaimsIdentity(new Claim[]{
-						new Claim(ClaimTypes.Name, user.Email),
-						new Claim(ClaimTypes.Role, user.Role.ToString()),
+						new Claim(ClaimTypes.Name, user.login),
+						new Claim(ClaimTypes.Role, user.userType.ToString()),
 					}),
 					Expires = DateTime.UtcNow.AddHours(expirationTime),
 					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

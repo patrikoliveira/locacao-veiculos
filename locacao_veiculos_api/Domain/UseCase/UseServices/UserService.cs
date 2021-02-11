@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using locacao_veiculos_api.Domain.Authentication;
 using locacao_veiculos_api.Domain.Entities;
+using locacao_veiculos_api.Domain.ViewModel;
+using locacao_veiculos_api.Infra.Database;
 
 namespace locacao_veiculos_api.Domain.UseCase.UseServices
 {
