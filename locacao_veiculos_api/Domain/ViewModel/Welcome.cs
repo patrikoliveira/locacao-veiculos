@@ -1,7 +1,22 @@
 namespace locacao_veiculos_api.Domain.ViewModel
 {
-    public class Welcome
+    public record Welcome
     {
-        
+        public string Message
+        { 
+          get
+          { 
+            return "Teste API";
+          }
+        }
+
+        public string Documentation
+        { 
+          get
+          { 
+            return "https://localhost:5001/swagger";
+          }
+        }
+
     }
 }
