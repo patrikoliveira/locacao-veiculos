@@ -70,8 +70,8 @@ namespace locacao_veiculos_api
 
             services.AddAuthorization(options =>
             {
-               options.AddPolicy(UserType.Operator.ToString(), policy => policy.RequireClaim(UserType.Operator.ToString()));
-               options.AddPolicy(UserType.Costumer.ToString(), policy => policy.RequireClaim(UserType.Costumer.ToString()));
+               options.AddPolicy(TipoUsuario.Operador.ToString(), policy => policy.RequireClaim(TipoUsuario.Operador.ToString()));
+               options.AddPolicy(TipoUsuario.Cliente.ToString(), policy => policy.RequireClaim(TipoUsuario.Cliente.ToString()));
             });
         }
 

@@ -1,6 +1,6 @@
 namespace locacao_veiculos_api.Domain.ViewModel
 {
-    public record UserJwt
+    public record UsuarioJwt
     {
         public int id { get; set; }
         public string login { get; set; }

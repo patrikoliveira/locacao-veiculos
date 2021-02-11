@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace locacao_veiculos_api.Domain.Entities
 {
     [Table("users")]
-    public class User
+    public class Usuario
     {
         [Key]
-        public int id {get;set;}
+        public int Id {get;set;}
         [Required]
-        public string login {get;set;}
+        public string Login {get;set;}
         [Required]
-        public string password {get;set;}
-        public string name {get;set;}
-        public UserType userType {get;set;}
+        public string senha {get;set;}
+        public string Nome {get;set;}
+        public TipoUsuario TipoUsuario {get;set;}
     }
 }

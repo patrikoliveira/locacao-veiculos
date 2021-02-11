@@ -1,6 +1,6 @@
 namespace locacao_veiculos_api.Domain.ViewModel
 {
-    public record UserLogin
+    public record UsuarioLogin
     {
         public string login {get;set;}
         public string password {get;set;}   

@@ -3,8 +3,8 @@ using locacao_veiculos_api.Domain.Entities;
 
 namespace locacao_veiculos_api.Domain.UseCase.UseServices
 {
-    public interface IUserRepository
+    public interface IUsuarioRepository
     {
-        Task<User> FindByLoginAndPassword(string login, string password);
+        Task<Usuario> FindByLoginAndPassword(string login, string password);
     }
 }

@@ -17,6 +17,6 @@ namespace locacao_veiculos_api.Infra.Database
             optionsBuilder.UseNpgsql(jAppSettings["ConnectionString"].ToString());
         }
         
-        public DbSet<User> Users { get; set; }
+        public DbSet<Usuario> Users { get; set; }
     }
 }

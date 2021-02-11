@@ -4,6 +4,6 @@ namespace locacao_veiculos_api.Domain.Authentication
 {
     public interface IToken
     {
-        string GerarToken(User user);
+        string GerarToken(Usuario user);
     }
 }

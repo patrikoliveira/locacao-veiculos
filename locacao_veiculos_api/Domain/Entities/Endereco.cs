@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Address
+public class Endereco
 {
 	[Required]
 	public string zipCode { get; set; }

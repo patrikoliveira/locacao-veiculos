@@ -1,6 +1,6 @@
 namespace locacao_veiculos_api.Domain.ViewModel
 {
-    public record UserView
+    public record UsuarioView
     {
         public int id { get; set; }
         public string email { get; set; }

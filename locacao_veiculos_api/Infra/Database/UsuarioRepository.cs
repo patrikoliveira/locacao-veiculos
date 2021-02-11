@@ -5,16 +5,16 @@ using locacao_veiculos_api.Domain.Entities;
 
 namespace locacao_veiculos_api.Infra.Database
 {
-    public class UserRepository
+    public class UsuarioRepository
     {   
         private readonly EntityContext context;
-        public UserRepository(EntityContext context)
+        public UsuarioRepository(EntityContext context)
         {
           this.context = context;
         }
-        public async Task<User> FindByLoginAndPassword(string login, string password)
+        public async Task<Usuario> FindByLoginAndPassword(string login, string password)
         {
-            return await context.Users.Where(u => u.login == login && u.password == password).FirstOrDefaultAsync();
+            return await context.Users.Where(u => u.Login == login && u.senha == password).FirstOrDefaultAsync();
         }
     }
 }
