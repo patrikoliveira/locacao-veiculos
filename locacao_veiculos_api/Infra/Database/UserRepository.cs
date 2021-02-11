@@ -1,7 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using locacao_veiculos_api.Domain.Entities;
-using locacao_veiculos_api.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace locacao_veiculos_api.Infra.Database
