@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace locacao_veiculos_test
+namespace LocacaoVeiculosTest
 {
     public class Tests
     {
