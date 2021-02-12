@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Authentication;
 using LocacaoVeiculosApi.Domain.Entities;
@@ -27,6 +29,11 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
              userType = loggedUser.TipoUsuario.ToString(),
              Token = token.GerarToken(loggedUser)
            };
+        }
+
+        internal Task<ICollection<UsuarioView>> All()
+        {
+            throw new NotImplementedException();
         }
     }
 }
