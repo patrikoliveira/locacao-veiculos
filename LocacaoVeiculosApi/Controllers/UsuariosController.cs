@@ -35,12 +35,14 @@ namespace LocacaoVeiculosApi.Controllers
 
         [HttpGet]
         [Route("/usuario")]
+        [AllowAnonymous]
         public async Task<ICollection<UsuarioView>> Index(){
             return await _userService.All();
         }
 
         [HttpPut]
         [Route("/usuario/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update(int id, [FromBody] User user){
             user.Id = id;
             try{
@@ -56,6 +58,7 @@ namespace LocacaoVeiculosApi.Controllers
 
         [HttpDelete]
         [Route("/usuario/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id){
             try
             {
