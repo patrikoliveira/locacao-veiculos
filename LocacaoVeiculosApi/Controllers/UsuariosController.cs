@@ -35,10 +35,45 @@ namespace LocacaoVeiculosApi.Controllers
 
         [HttpGet]
         [Route("/usuario")]
-        public async Task<ICollection<UsuarioView>> Index()
-        {
+        public async Task<ICollection<UsuarioView>> Index(){
             return await _userService.All();
         }
 
+        [HttpPut]
+        [Route("/usuario/{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] User user){
+            user.Id = id;
+            try{
+                await _userService.Save(user);
+                return StatusCode(204);
+            }
+            catch(Exception err){
+                return StatusCode(401, new {
+                    Message = err.Message("Falha na alteração.")
+                });
+            }
+        }
+
+        [HttpDelete]
+        [Route("/usuario/{id}")]
+        public async Task<IActionResult> Delete(int id){
+            try
+            {
+                await _userService.Delete(id);
+                return StatusCode(204);
+            }
+            catch(Exception err)
+            {
+                return StatusCode(401, new {
+                    Message = err.Message("Falha ao deletar.")
+                });
+            }
+            catch(UserNotFound err)
+            {
+                return StatusCode(404, new {
+                    Message = err.Message
+                });
+            }
+        }
      }
 }
