@@ -33,8 +33,5 @@ namespace LocacaoVeiculosApi.Controllers
                 }
             }
 
-
-
-    
      }
 }
