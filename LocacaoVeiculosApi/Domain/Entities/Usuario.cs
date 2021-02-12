@@ -11,7 +11,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
         [Required]
         public string CpfMatricula {get;set;}
         [Required]
-        public string senha {get;set;}
+        public string Senha {get;set;}
         public string Nome {get;set;}
         public Endereco Endereco {get;set;}
         public TipoUsuario TipoUsuario {get;set;}
