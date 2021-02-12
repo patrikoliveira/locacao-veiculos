@@ -19,11 +19,11 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
         private IUsuarioRepository repository;
 
         public async Task<UsuarioJwt> Login(Usuario user, IToken token){
-           var loggedUser = await repository.FindByLoginAndPassword(user.Login, user.senha);
-           if(loggedUser == null) throw new UserNotFound("Usuário e senha inválidos.");
+           var loggedUser = await repository.FindByLoginAndPassword(user.CpfMatricula, user.Senha);
+           if(loggedUser == null) throw new UsuarioNotFound("Usuário e senha inválidos.");
            return new UsuarioJwt(){
              id = loggedUser.Id,
-             login = loggedUser.Login,
+             login = loggedUser.CpfMatricula,
              userType = loggedUser.TipoUsuario.ToString(),
              Token = token.GerarToken(loggedUser)
            };

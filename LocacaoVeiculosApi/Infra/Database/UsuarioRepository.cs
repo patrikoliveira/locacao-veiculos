@@ -1,7 +1,9 @@
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.ViewModel;
 
 namespace LocacaoVeiculosApi.Infra.Database
 {
@@ -15,7 +17,7 @@ namespace LocacaoVeiculosApi.Infra.Database
 
         public async Task<Usuario> FindByLoginAndPassword(string login, string password)
         {
-            return await context.Users.Where(u => u.Login == login && u.senha == password).FirstOrDefaultAsync();
+            return await context.Users.Where(u => u.CpfMatricula == login && u.Senha == password).FirstOrDefaultAsync();
         }
 
         public async Task Save(Usuario user)
@@ -30,13 +32,13 @@ namespace LocacaoVeiculosApi.Infra.Database
           await context.SaveChangesAsync(); 
         }
 
-        public async Task<ICollection<UserView>> All()
+        public async Task<ICollection<UsuarioView>> All()
         {
             return await context.Users.Select( u => new UsuarioView {
                         Id = u.Id,
                         CpfMatricula = u.CpfMatricula,
                         Nome = u.Nome,
-                        Endereco = u.Endereco;
+                        Endereco = u.Endereco,
                         TipoUsuario = u.TipoUsuario.ToString()
                     }).ToListAsync();
         }

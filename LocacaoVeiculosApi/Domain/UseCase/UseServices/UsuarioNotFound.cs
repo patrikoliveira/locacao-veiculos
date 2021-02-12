@@ -3,8 +3,8 @@ using System;
 namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 {
     [Serializable]
-    public class UserNotFound : Exception
+    public class UsuarioNotFound : Exception
     {
-        public UserNotFound(string message) : base(message) { }
+        public UsuarioNotFound(string message) : base(message) { }
     }
 }

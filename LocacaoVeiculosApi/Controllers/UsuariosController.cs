@@ -1,17 +1,18 @@
+using System;
+using LocacaoVeiculosApi.Infra.Database;
+using LocacaoVeiculosApi.Infra.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.ViewModel;
-using LocacaoVeiculosApi.Infra.Authentication;
-using LocacaoVeiculosApi.Domain.Entities;
 
 namespace LocacaoVeiculosApi.Controllers
 {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class UsuariosController : ControllerBase
+    public class UsuariosController : ControllerBase
         {
             private readonly UsuarioService _userService;
             private readonly ILogger<HomeController> _logger;
@@ -22,11 +23,11 @@ namespace LocacaoVeiculosApi.Controllers
             public async Task<ActionResult> Login(UsuarioLogin userLogin){  
                 try{
                     return StatusCode(200, await _userService.Login(new Usuario(){
-                        Login = userLogin.login,
-                        senha = userLogin.password,
+                        CpfMatricula = userLogin.CpfMatricula,
+                        Senha = userLogin.Senha
                     }, new Token()));
                 }
-                catch(UserNotFound err){
+                catch(UsuarioNotFound err){
                     return StatusCode(401, new {
                         Message = err.Message
                     });
@@ -43,13 +44,13 @@ namespace LocacaoVeiculosApi.Controllers
         [HttpPut]
         [Route("/usuario/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Update(int id, [FromBody] User user){
-            user.Id = id;
+        public async Task<IActionResult> Update(int id, [FromBody] Usuario Usuario){
+            Usuario.Id = id;
             try{
-                await _userService.Save(user);
+                await _userService.Save(Usuario);
                 return StatusCode(204);
             }
-            catch(Exception err){
+            catch(UsuarioEmailUnico err){
                 return StatusCode(401, new {
                     Message = err.Message("Falha na alteração.")
                 });
@@ -71,7 +72,7 @@ namespace LocacaoVeiculosApi.Controllers
                     Message = err.Message("Falha ao deletar.")
                 });
             }
-            catch(UserNotFound err)
+            catch(UsuarioNotFound err)
             {
                 return StatusCode(404, new {
                     Message = err.Message

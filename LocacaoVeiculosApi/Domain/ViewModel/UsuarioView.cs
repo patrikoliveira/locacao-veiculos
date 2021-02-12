@@ -2,8 +2,10 @@ namespace LocacaoVeiculosApi.Domain.ViewModel
 {
     public record UsuarioView
     {
-        public int id { get; set; }
-        public string email { get; set; }
-        public string userType { get; set; }
+        public string Nome { get; internal set; }
+        public int Id { get; internal set; }
+        public string CpfMatricula { get; internal set; }
+        public Endereco Endereco { get; internal set; }
+        public string TipoUsuario { get; internal set; }
     }
 }
