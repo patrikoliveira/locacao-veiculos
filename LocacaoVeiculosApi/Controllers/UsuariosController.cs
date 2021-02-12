@@ -17,7 +17,7 @@ namespace LocacaoVeiculosApi.Controllers
             private readonly ILogger<HomeController> _logger;
 
             [HttpPost]
-            [Route("/users/login")]
+            [Route("/login")]
             [AllowAnonymous]
             public async Task<ActionResult> Login(UsuarioLogin userLogin){  
                 try{
@@ -32,6 +32,13 @@ namespace LocacaoVeiculosApi.Controllers
                     });
                 }
             }
+
+        [HttpGet]
+        [Route("/usuario")]
+        public async Task<ICollection<UsuarioView>> Index()
+        {
+            return await _userService.All();
+        }
 
      }
 }

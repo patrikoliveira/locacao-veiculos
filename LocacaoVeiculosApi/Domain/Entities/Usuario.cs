@@ -9,10 +9,11 @@ namespace LocacaoVeiculosApi.Domain.Entities
         [Key]
         public int Id {get;set;}
         [Required]
-        public string Login {get;set;}
+        public string CpfMatricula {get;set;}
         [Required]
         public string senha {get;set;}
         public string Nome {get;set;}
+        public Endereco Endereco {get;set;}
         public TipoUsuario TipoUsuario {get;set;}
     }
 }
