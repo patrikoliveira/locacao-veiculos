@@ -65,5 +65,25 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
           await repository.Delete(user);
         }
         
+        public async Task Update(Usuario user)
+        {
+            //TODO
+            var usurioAlteracao = await repository.FindById(user.Id);
+            if (usurioAlteracao == null || usurioAlteracao.Id == 0) throw new UsuarioNotFound("Usuário não encontrado");
+
+         /* var address = EntityBuilder.Call<Address>(completeUser);
+                var userBuilder = EntityBuilder.Call<Usuario>(completeUser);
+                userBuilder.Id = usurioAlteracao.Id;
+                userBuilder.IdAddress = usurioAlteracao.IdAddress;
+                address.Id = Convert.ToInt32(usurioAlteracao.IdAddress);
+                
+                var size = await personRepository.CountByIdAndDocument<Usuario>(userBuilder.Id, userBuilder.CPF, Convert.ToInt16(userBuilder.Role));
+*/
+                //await repository.Update(address);
+                await repository.Update(user);
+        }
+
+
+
     }
 }
