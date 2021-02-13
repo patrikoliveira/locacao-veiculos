@@ -13,5 +13,7 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
         Task<ICollection<UsuarioView>> All();
         Task<Usuario> FindById(int id);
         Task<Usuario> FindByLoginAndPassword(string login, string password);
+        Task CountByIdAndUser(int id, string cpfMatricula);
+        Task CountByUser(string cpfMatricula);
     }
 }

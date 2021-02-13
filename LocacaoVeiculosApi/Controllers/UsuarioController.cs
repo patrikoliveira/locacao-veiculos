@@ -14,7 +14,7 @@ namespace LocacaoVeiculosApi.Controllers
 {
     public class UsuarioController : ControllerBase
     {
-         private readonly UsuarioService _userService;
+        private readonly UsuarioService _userService;
         private readonly ILogger<HomeController> _logger;
 
             [HttpPost]
@@ -42,7 +42,7 @@ namespace LocacaoVeiculosApi.Controllers
                 await _userService.Save(user);
                 return StatusCode(201);
                 }
-            catch(UsuarioEmailUnico err){
+            catch(UsuarioUnico err){
                 return StatusCode(401, new {
                     Message = err.Message
                 });
@@ -55,6 +55,5 @@ namespace LocacaoVeiculosApi.Controllers
         public async Task<ICollection<UsuarioView>> Index(){
             return await _userService.All();
         }
-
     }
 }

@@ -36,6 +36,19 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
             throw new NotImplementedException();
         }
 
-        public async Task Save(Usuario user) => throw new NotImplementedException();
+        public async Task Save(Usuario user) {
+          //if(user.TipoUsuario == null) user.TipoUsuario = UserRole.Operador;
+          
+          if(user.Id > 0){
+            var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
+            if(size > 0) throw new UsuarioUnico("CPF ou Matrícula já cadastrado.");
+            await repository.Update(user);
+          }
+          else{
+            var size = await repository.CountByUser(user.CpfMatricula);
+            if(size > 0) throw new UsuarioUnico("CPF ou Matrícula já cadastrado.");
+            await repository.Save(user);
+          }
+        }
     }
 }
