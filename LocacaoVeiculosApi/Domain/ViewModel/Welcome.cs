@@ -6,7 +6,7 @@ namespace LocacaoVeiculosApi.Domain.ViewModel
         { 
           get
           { 
-            return "Teste API";
+            return "API Locação de Veículos";
           }
         }
 

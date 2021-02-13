@@ -36,7 +36,7 @@ namespace LocacaoVeiculosApi.Controllers
             [AllowAnonymous]
             public async Task<ActionResult> Create(Usuario user){  
                 try{
-                await _userService.Save(user);
+                //await _userService.Save(user);
                 return StatusCode(201);
                 }
             catch(UsuarioUnico err){

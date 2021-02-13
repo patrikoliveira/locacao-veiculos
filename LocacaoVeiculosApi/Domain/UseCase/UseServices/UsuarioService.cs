@@ -5,6 +5,7 @@ using LocacaoVeiculosApi.Domain.Authentication;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using LocacaoVeiculosApi.Domain.ViewModel;
+using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infra.Database;
 using Microsoft.Extensions.Logging;
 
@@ -34,12 +35,17 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
             };
         }
 
+        internal Task<object> Login(UsuarioLogin userLogin, Token token)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Usuario> RetornaTodosUsuarios()
         {
             return repository.All();
         }
 
-        public async Task Save(Usuario user) 
+       /* public async Task Save(Usuario user) 
         {
             if (user.TipoUsuario == null) user.TipoUsuario = OPERADOR;
 
@@ -55,7 +61,7 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
               if(size > 0) throw new UsuarioUnico("Matrícula já cadastrada.");
                 await repository.Save(user);
             }
-        }
+        }*/
 
         public async Task Delete(int id)
         {
