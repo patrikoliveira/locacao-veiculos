@@ -43,34 +43,25 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 
         public async Task Save(Usuario user)
         {
-          var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
+         /* var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
             if (user.TipoUsuario == 1)
             {
                 if (user.Endereco.ToString().IsNotNullOrEmpty<Usuario>)
                 {
+                  if(size > 0) throw new UsuarioUnico("CPF já cadastrado.");
                     await repository.Save(user);
                 }
             }
             else if (user.TipoUsuario == 2)
             {
+              if(size > 0) throw new UsuarioUnico("Matrícula já cadastrada.");
                 await repository.Save(user);
             }
             else if (user.TipoUsuario == null)
             {
                 user.TipoUsuario = OPERADOR;
                 await repository.Save(user);
-            }
-
-            /* if(user.Id > 0){
-               var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
-               if(size > 0) throw new UsuarioUnico("CPF ou Matrícula já cadastrado.");
-               await repository.Update(user);
-             }
-             else{
-               var size = await repository.CountByUser(user.CpfMatricula);
-               if(size > 0) throw new UsuarioUnico("CPF ou Matrícula já cadastrado.");
-               await repository.Save(user);
-             }*/
+            }*/
         }
     }
 }
