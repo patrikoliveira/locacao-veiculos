@@ -1,11 +1,8 @@
-using System;
-using LocacaoVeiculosApi.Infra.Database;
 using LocacaoVeiculosApi.Infra.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.ViewModel;
@@ -52,7 +49,7 @@ namespace LocacaoVeiculosApi.Controllers
         [HttpGet]
         [Route("/usuario")]
         [AllowAnonymous]
-        public async Task<ICollection<UsuarioView>> Index(){
+        public async Task<Usuario> Index(){
             return await _userService.All();
         }
     }

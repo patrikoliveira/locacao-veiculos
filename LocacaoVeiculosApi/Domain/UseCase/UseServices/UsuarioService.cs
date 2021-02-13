@@ -16,10 +16,7 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
             this.repository = repository;
         }
 
-        public UsuarioService(UsuarioRepository userRepository)
-        {
-        }
-
+        public UsuarioService(UsuarioRepository userRepository){  }
         private const int OPERADOR = 2;
         private IUsuarioRepository repository;
 
@@ -36,14 +33,14 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
             };
         }
 
-        public async Task<ICollection<UsuarioView>> All()
+        public async Task<Usuario> All()
         {
             throw new NotImplementedException();
         }
 
         public async Task Save(Usuario user)
         {
-         /* var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
+          /*var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
             if (user.TipoUsuario == 1)
             {
                 if (user.Endereco.ToString().IsNotNullOrEmpty<Usuario>)

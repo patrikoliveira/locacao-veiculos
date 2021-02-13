@@ -10,7 +10,7 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
         Task Update(Usuario Usuario);
         Task Save(Usuario Usuario);
         Task Delete(Usuario Usuario);
-        Task<ICollection<UsuarioView>> All();
+        Task<Usuario> All();
         Task<Usuario> FindById(int id);
         Task<Usuario> FindByLoginAndPassword(string login, string password);
         Task CountByIdAndUser(int id, string cpfMatricula);
