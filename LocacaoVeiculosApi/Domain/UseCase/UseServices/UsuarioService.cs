@@ -57,6 +57,13 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
             }
         }
 
+        public async Task Delete(int id)
+        {
+          if(id == 0) throw new UsuarioIdVazio("Id não pode ser vazio");
+          var user = await repository.FindById(id);
+          if(user == null) throw new UsuarioNotFound("Usuário não encontrado");
+          await repository.Delete(user);
+        }
         
     }
 }
