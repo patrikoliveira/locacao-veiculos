@@ -6,6 +6,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using LocacaoVeiculosApi.Domain.ViewModel;
 using LocacaoVeiculosApi.Infra.Database;
+using Microsoft.Extensions.Logging;
 
 namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 {
@@ -33,32 +34,29 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
             };
         }
 
-        public async Task<Usuario> All()
+        public Task<Usuario> RetornaTodosUsuarios()
         {
-            throw new NotImplementedException();
+            return repository.All();
         }
 
-        public async Task Save(Usuario user)
+        public async Task Save(Usuario user) 
         {
-          /*var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
-            if (user.TipoUsuario == 1)
-            {
-                if (user.Endereco.ToString().IsNotNullOrEmpty<Usuario>)
-                {
+            if (user.TipoUsuario == null) user.TipoUsuario = OPERADOR;
+
+            if (user.TipoUsuario == 1){
+                if (user.Endereco.ToString().IsNotNullOrEmpty<Usuario>){
+                 var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
                   if(size > 0) throw new UsuarioUnico("CPF já cadastrado.");
                     await repository.Save(user);
                 }
             }
-            else if (user.TipoUsuario == 2)
-            {
+            else if (user.TipoUsuario == 2){
+             var size = await repository.CountByUser(user.CpfMatricula);
               if(size > 0) throw new UsuarioUnico("Matrícula já cadastrada.");
                 await repository.Save(user);
             }
-            else if (user.TipoUsuario == null)
-            {
-                user.TipoUsuario = OPERADOR;
-                await repository.Save(user);
-            }*/
         }
+
+        
     }
 }
