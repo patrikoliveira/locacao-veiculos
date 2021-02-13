@@ -34,6 +34,21 @@ namespace LocacaoVeiculosApi.Controllers
                 }
             }
 
+            [HttpPost]
+            [Route("/usuario")]
+            [AllowAnonymous]
+            public async Task<ActionResult> Create(Usuario user){  
+                try{
+                await _userService.Save(user);
+                return StatusCode(201);
+                }
+            catch(UsuarioEmailUnico err){
+                return StatusCode(401, new {
+                    Message = err.Message
+                });
+            }
+            }
+
         [HttpGet]
         [Route("/usuario")]
         [AllowAnonymous]

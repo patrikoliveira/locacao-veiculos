@@ -31,9 +31,11 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
            };
         }
 
-        internal Task<ICollection<UsuarioView>> All()
+        public async Task<ICollection<UsuarioView>> All()
         {
             throw new NotImplementedException();
         }
+
+        public async Task Save(Usuario user) => throw new NotImplementedException();
     }
 }
