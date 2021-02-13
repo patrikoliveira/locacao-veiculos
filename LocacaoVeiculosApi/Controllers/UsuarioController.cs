@@ -49,8 +49,8 @@ namespace LocacaoVeiculosApi.Controllers
         [HttpGet]
         [Route("/usuario")]
         [AllowAnonymous]
-        public async Task<Usuario> Index(){
-            return await _userService.All();
+        public async Task<Usuario> RetornaTodosUsuarios(){
+            return await _userService.RetornaTodosUsuarios();
         }
     }
 }
