@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace LocacaoVeiculosApi.Domain.Entities
 {
+    [Table("users")]
     public class Operador : Usuario, IOperador
     {
         [Column]
@@ -25,6 +26,14 @@ namespace LocacaoVeiculosApi.Domain.Entities
             set
             {
                 this.CpfMatricula = value;
+            }
+        }
+
+        public override TipoUsuario Tipo
+        {
+            get
+            {
+                return TipoUsuario.Operador;
             }
         }
     }

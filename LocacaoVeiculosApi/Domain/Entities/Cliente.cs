@@ -14,27 +14,36 @@ namespace LocacaoVeiculosApi.Domain.Entities
         [Column]
         [JsonIgnore]
         public override int TipoUsuario { get; set; }
-        
+
         [Column]
         public string DataNascimento { get; set; }
-        
+
         [Column]
         [JsonIgnore]
-        public override int? EnderecoId {get;set;}
+        public override int? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
         [Required]
-        public string Cpf{
-            get{
+        public string Cpf
+        {
+            get
+            {
                 if (!string.IsNullOrEmpty(this.CpfMatricula) && !IsCpfValido()) throw new CpfInvalidoException("CPF informado é inválido.");
                 return this.CpfMatricula;
             }
-            set{
+            set
+            {
                 this.CpfMatricula = value;
             }
         }
-        
 
+        public override TipoUsuario Tipo
+        {
+            get
+            {
+                return TipoUsuario.Cliente;
+            }
+        }
 
 
         private static bool IsCpfValido()
@@ -45,11 +54,11 @@ namespace LocacaoVeiculosApi.Domain.Entities
             string digito;
             int soma;
             int resto;
-            cpf = cpf.Trim();
-            cpf = cpf.Replace(".", "").Replace("-", "");
-            if (cpf.Length != 11)
+            CpfMatricula = CpfMatricula.Trim();
+            CpfMatricula = CpfMatricula.Replace(".", "").Replace("-", "");
+            if (CpfMatricula.Length != 11)
                 return false;
-            tempCpf = cpf.Substring(0, 9);
+            tempCpf = CpfMatricula.Substring(0, 9);
             soma = 0;
 
             for (int i = 0; i < 9; i++)
@@ -70,7 +79,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
             else
                 resto = 11 - resto;
             digito = digito + resto.ToString();
-            return cpf.EndsWith(digito);
+            return CpfMatricula.EndsWith(digito);
         }
 
     }
