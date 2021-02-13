@@ -38,7 +38,6 @@ namespace LocacaoVeiculosApi.Infra.Database
                         Id = u.Id,
                         CpfMatricula = u.CpfMatricula,
                         Nome = u.Nome,
-                        Endereco = u.Endereco,
                         TipoUsuario = u.TipoUsuario.ToString()
                     }).ToListAsync();
         }
