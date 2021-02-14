@@ -1,7 +1,13 @@
 namespace LocacaoVeiculosApi.Domain.Entities
 {
-    public class IUsuario
+    public interface IUsuario
     {
+        int Id {get;set;}
+        string Nome {get;set;}
+        string Senha {get;set;}
+        string CpfMatricula {get;set;}
+        int TipoUsuario {get;set;}
+        TipoUsuario Tipo {get;}
         
     }
 }
