@@ -29,12 +29,7 @@ namespace LocacaoVeiculosApi.Controllers
             try{
                 return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
             }
-            catch (UsuarioNotFound err) public string CpfMatricula {get;set;}
-        [Required]
-        public string Senha {get;set;}
-        public string Nome {get;set;}
-        public Endereco Endereco {get;set;}
-        public TipoUsuario TipoUsuario {get;set;}
+            catch (UsuarioNotFound err)
             {
                 return StatusCode(401, new {
                     Message = err.Message
