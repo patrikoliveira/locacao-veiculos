@@ -4,6 +4,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
     {
         string Cpf {get;set;}
         string DataNascimento {get;set;}
-        int EnderecoId {get;set;}
+        int? EnderecoId {get;set;}
+        string CpfMatricula { get; set; }
     }
 }

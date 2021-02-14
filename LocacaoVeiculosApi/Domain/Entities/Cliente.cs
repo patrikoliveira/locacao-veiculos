@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -6,11 +5,12 @@ using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 
 namespace LocacaoVeiculosApi.Domain.Entities
 {
+    [Table("users")]
     public class Cliente : Usuario, ICliente
     {
         [Column]
         [JsonIgnore]
-        public override string CpfMatricula { get; set; }
+        public string CpfMatricula { get; set; }
         [Column]
         [JsonIgnore]
         public override int TipoUsuario { get; set; }
@@ -37,15 +37,14 @@ namespace LocacaoVeiculosApi.Domain.Entities
             }
         }
 
-        public override TipoUsuario Tipo
+        /*public override TipoUsuario Tipo
         {
             get
             {
                 return TipoUsuario.Cliente;
             }
-        }
-
-
+        }*/
+        
         private static bool IsCpfValido()
         {
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -54,11 +53,11 @@ namespace LocacaoVeiculosApi.Domain.Entities
             string digito;
             int soma;
             int resto;
-            CpfMatricula = CpfMatricula.Trim();
-            CpfMatricula = CpfMatricula.Replace(".", "").Replace("-", "");
-            if (CpfMatricula.Length != 11)
+            this.CpfMatricula = this.CpfMatricula.Trim();
+            this.CpfMatricula = this.CpfMatricula.Replace(".", "").Replace("-", "");
+            if (this.CpfMatricula.Length != 11)
                 return false;
-            tempCpf = CpfMatricula.Substring(0, 9);
+            tempCpf = this.CpfMatricula.Substring(0, 9);
             soma = 0;
 
             for (int i = 0; i < 9; i++)
@@ -79,7 +78,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
             else
                 resto = 11 - resto;
             digito = digito + resto.ToString();
-            return CpfMatricula.EndsWith(digito);
+            return this.CpfMatricula.EndsWith(digito);
         }
 
     }
