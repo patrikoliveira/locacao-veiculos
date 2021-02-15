@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
@@ -23,11 +24,12 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpPost]
-        [Route("/login")]
+        [Route("/usuario/login")]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(UsuarioLogin userLogin)
+        public async Task<ActionResult> Login(Usuario userLogin)
         {  
-            try{
+            try
+            {
                 return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
             }
             catch (UsuarioNotFound err)
@@ -41,14 +43,16 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpPost]
         [Route("/cliente/login")]
         [AllowAnonymous]
-        public async Task<ActionResult> ClienteLogin(ClienteLogin clienteLogin)
-        {  
-            try{
-                return StatusCode(200, await _usuarioService.Login(clienteLogin, new Token()));
+        public async Task<ActionResult> ClienteLogin(ClienteLogin userLogin)
+        {
+            try
+            {
+                return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
             }
             catch (UsuarioNotFound err)
             {
-                return StatusCode(401, new {
+                return StatusCode(401, new
+                {
                     Message = err.Message
                 });
             }
@@ -57,18 +61,20 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpPost]
         [Route("/operador/login")]
         [AllowAnonymous]
-        public async Task<ActionResult> OperadorLogin(OperadorLogin operadorLogin)
-        {  
-            try{
-                return StatusCode(200, await _usuarioService.Login(operadorLogin, new Token()));
+        public async Task<ActionResult> OperadorLogin(OperatorLogin userLogin)
+        {
+            try
+            {
+                return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
             }
             catch (UsuarioNotFound err)
             {
-                return StatusCode(401, new {
+                return StatusCode(401, new
+                {
                     Message = err.Message
                 });
             }
         }
-        
+
     }
 }

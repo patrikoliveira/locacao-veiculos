@@ -30,6 +30,10 @@ namespace LocacaoVeiculosApi.Infra.Authentication
 				var token = tokenHandler.CreateToken(tokenDescriptor);
 				return tokenHandler.WriteToken(token);
 			}
-        
+
+        public string GerarToken(IUsuario usuarioLogado)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

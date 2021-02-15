@@ -1,57 +1,30 @@
-using LocacaoVeiculosApi.Infra.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Services;
-using LocacaoVeiculosApi.Presentation.ViewModel;
-using LocacaoVeiculosApi.Domain.Entities.Exceptions;
+using System.Collections.Generic;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     public class UsuarioController : ControllerBase
     {
-        private readonly UsuarioService _userService;
-        private readonly ILogger<HomeController> _logger;
+        private readonly EntityService _entityService;
+        private readonly ILogger<UsuarioController> _logger;
 
-            [HttpPost]
-            [Route("/login")]
-            [AllowAnonymous]
-            public async Task<ActionResult> Login(UsuarioLogin userLogin){  
-                try{
-                    return StatusCode(200, await _userService.Login(new Usuario(){
-                        CpfMatricula = userLogin.CpfMatricula,
-                        Senha = userLogin.Senha
-                    }, new Token()));
-                }
-                catch(UsuarioNotFound err){
-                    return StatusCode(401, new {
-                        Message = err.Message
-                    });
-                }
-            }
-
-            [HttpPost]
-            [Route("/usuario")]
-            [AllowAnonymous]
-            public async Task<ActionResult> Create(Usuario user){  
-                try{
-                //await _userService.Save(user);
-                return StatusCode(201);
-                }
-            catch(UsuarioUnico err){
-                return StatusCode(401, new {
-                    Message = err.Message
-                });
-            }
-            }
+        public UsuarioController(ILogger<UsuarioController> logger)
+        {
+            _logger = logger;
+            _entityService = new EntityService(new EntityRepository());
+        }
 
         [HttpGet]
-        [Route("/usuario")]
-        [AllowAnonymous]
-        public async Task<Usuario> RetornaTodosUsuarios(){
-            return await _userService.RetornaTodosUsuarios();
+        [Route("/usuarios")]
+        [Authorize(Roles = "Operador")]
+        public async Task<ICollection<Usuario>> Index()
+        {
+            return await _entityService.All<Usuario>();
         }
     }
 }

@@ -7,6 +7,8 @@ using System;
 using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Authentication;
 using System.Collections.Generic;
+using LocacaoVeiculosApi.Infrastructure.Repositories;
+using LocacaoVeiculosApi.Presentation.Controllers;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -17,7 +19,15 @@ namespace LocacaoVeiculosApi.Services
             this.repository = repository;
         }
 
+        public UsuarioService(UsuarioRepository usuarioRepository, EntityRepository entityRepository)
+        {
+            this.usuarioRepository = usuarioRepository;
+            this.entityRepository = entityRepository;
+        }
+
         private IUsuarioRepository repository;
+        private UsuarioRepository usuarioRepository;
+        private EntityRepository entityRepository;
 
         public async Task<UsuarioJwt> Login(Usuario user, IToken token)
         {

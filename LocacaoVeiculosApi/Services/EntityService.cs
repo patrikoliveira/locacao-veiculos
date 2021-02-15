@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
+using LocacaoVeiculosApi.Presentation.Controllers;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -10,6 +11,10 @@ namespace LocacaoVeiculosApi.Services
         public EntityService(IEntityRepository repository)
         {
             this.repository = repository;
+        }
+
+        public EntityService(EntityRepository entityRepository)
+        {
         }
 
         private IEntityRepository repository;
