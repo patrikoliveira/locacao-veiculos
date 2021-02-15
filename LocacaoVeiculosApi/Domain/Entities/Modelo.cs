@@ -7,7 +7,10 @@ namespace LocacaoVeiculosApi.Domain.Entities
     public class Modelo : IEntity
     {
         [Key]
+        [Column("id")]
         public int Id { get; set; }
+        
+        [Column("nome")]
         public string Nome { get; set; }
     }
 }

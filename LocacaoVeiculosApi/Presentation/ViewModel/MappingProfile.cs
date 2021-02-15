@@ -9,9 +9,11 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
         {
             CreateMap<Categoria, CategoriaDto>();
             CreateMap<Marca, MarcaDto>();
+            CreateMap<Modelo, ModeloDto>();
             
             CreateMap<CreateCategoriaDto, Categoria>();
             CreateMap<CreateMarcaDto, Marca>();
+            CreateMap<CreateModeloDto, Modelo>();
         }
         
     }

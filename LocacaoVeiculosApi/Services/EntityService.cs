@@ -99,7 +99,22 @@ namespace LocacaoVeiculosApi.Services
 
         public async Task<EntityResponse> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var entityExistente = await _entityRepository.FindByIdAsync(id);
+
+            if (entityExistente == null)
+                return new EntityResponse("Entidade não encontrada.");
+
+            try
+            {
+                _entityRepository.Remove(entityExistente);
+                await _unitOfWork.CompleteAsync();
+
+                return new EntityResponse((IEntity) entityExistente);
+            }
+            catch (Exception e)
+            {
+                return new EntityResponse($"Um erro ocorreu ao deletar a {entityExistente.GetType().Name}: {e.Message}");
+            }
         }
     }
 }

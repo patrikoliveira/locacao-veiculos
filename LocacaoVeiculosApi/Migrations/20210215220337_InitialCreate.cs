@@ -37,13 +37,13 @@ namespace LocacaoVeiculosApi.Migrations
                 name: "modelos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: true)
+                    nome = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_modelos", x => x.Id);
+                    table.PrimaryKey("PK_modelos", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +80,7 @@ namespace LocacaoVeiculosApi.Migrations
                         name: "FK_veiculos_modelos_ModeloId",
                         column: x => x.ModeloId,
                         principalTable: "modelos",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
