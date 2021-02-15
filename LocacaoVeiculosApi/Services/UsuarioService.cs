@@ -27,13 +27,27 @@ namespace LocacaoVeiculosApi.Services
                 usuarioLogado = await repository.FindByLoginAndPassword<Cliente>(user.CpfMatricula, user.Senha, Convert.ToInt16(TipoUsuario.Cliente));
             else usuarioLogado = await repository.FindByLoginAndPassword<Operador>(user.CpfMatricula, user.Senha, Convert.ToInt16(TipoUsuario.Operador));
 
-            if (usuarioLogado == null) throw new UsuarioNotFound("Usuário não encontrado. Login ou senha incorreta.");
+            if (usuarioLogado == null) throw new UsuarioNotFound("Usuário não encontrado. Login ou senha inválidos.");
             return new UsuarioJwt()
             {
                 id = usuarioLogado.Id,
                 nome = usuarioLogado.Nome,
                 login = usuarioLogado.CpfMatricula,
-                tipoUsuario = usuarioLogado.Tipo.ToString(),
+                tipoUsuario = usuarioLogado.TipoUsuario.ToString(),
+                Token = token.GerarToken(usuarioLogado)
+            };
+        }
+
+        public async Task<OperadorJwt> Login(OperatorLogin userLogin, IToken token)
+        {
+            IUsuario usuarioLogado = await repository.FindByLoginAndPassword<Operador>(userLogin.CpfMatricula, userLogin.Senha, Convert.ToInt16(TipoUsuario.Operador));
+            if (usuarioLogado == null) throw new UsuarioNotFound("Usuário não encontrado. Login ou senha inválidos.");
+            return new OperadorJwt()
+            {
+                id = usuarioLogado.Id,
+                nome = usuarioLogado.Nome,
+                Matricula = usuarioLogado.CpfMatricula,
+                tipoUsuario = usuarioLogado.TipoUsuario.ToString(),
                 Token = token.GerarToken(usuarioLogado)
             };
         }
