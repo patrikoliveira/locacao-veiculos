@@ -1,7 +1,5 @@
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Infra.Authentication;
-using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
@@ -47,6 +45,19 @@ namespace LocacaoVeiculosApi.Services
                 id = usuarioLogado.Id,
                 nome = usuarioLogado.Nome,
                 Matricula = usuarioLogado.CpfMatricula,
+                tipoUsuario = usuarioLogado.TipoUsuario.ToString(),
+                Token = token.GerarToken(usuarioLogado)
+            };
+        }
+        public async Task<ClienteJwt> Login(ClienteLogin userLogin, IToken token)
+        {
+            IUsuario usuarioLogado = await repository.FindByLoginAndPassword<Cliente>(userLogin.CpfMatricula, userLogin.Senha, Convert.ToInt16(TipoUsuario.Cliente));
+            if (usuarioLogado == null) throw new UsuarioNotFound("Usuário não encontrado. Login ou senha inválidos.");
+            return new ClienteJwt()
+            {
+                id = usuarioLogado.Id,
+                nome = usuarioLogado.Nome,
+                Cpf = usuarioLogado.CpfMatricula,
                 tipoUsuario = usuarioLogado.TipoUsuario.ToString(),
                 Token = token.GerarToken(usuarioLogado)
             };
