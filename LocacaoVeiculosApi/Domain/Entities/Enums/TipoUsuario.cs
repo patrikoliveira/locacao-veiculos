@@ -1,4 +1,4 @@
-namespace LocacaoVeiculosApi.Domain.Entities
+namespace LocacaoVeiculosApi.Domain.Entities.Enums
 {
     public enum TipoUsuario
     {
