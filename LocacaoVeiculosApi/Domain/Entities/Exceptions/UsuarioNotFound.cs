@@ -1,6 +1,6 @@
 using System;
 
-namespace LocacaoVeiculosApi.Domain.Exceptions
+namespace LocacaoVeiculosApi.Domain.Entities.Exceptions
 {
     [Serializable]
     public class UsuarioNotFound : Exception

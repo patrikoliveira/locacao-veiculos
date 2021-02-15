@@ -1,4 +1,4 @@
-using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {

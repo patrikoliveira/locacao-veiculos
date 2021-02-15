@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.Exceptions;
+using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;

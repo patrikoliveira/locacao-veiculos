@@ -1,12 +1,10 @@
-using System;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.Authentication;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
-using LocacaoVeiculosApi.Domain.Exceptions;
+using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -18,8 +16,15 @@ namespace LocacaoVeiculosApi.Services
         }
 
         public UsuarioService(UsuarioRepository userRepository){  }
+
+        public UsuarioService(UsuarioRepository userRepository, EntityRepository entityRepository) : this(userRepository)
+        {
+            this.entityRepository = entityRepository;
+        }
+
         private const int OPERADOR = 2;
         private IUsuarioRepository repository;
+        private EntityRepository entityRepository;
 
         public async Task<UsuarioJwt> Login(Usuario user, Token token)
         {

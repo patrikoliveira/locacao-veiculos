@@ -6,7 +6,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Services;
 using LocacaoVeiculosApi.Presentation.ViewModel;
-using LocacaoVeiculosApi.Domain.Exceptions;
+using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {

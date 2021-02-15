@@ -1,20 +1,12 @@
-using System;
-using System.IO;
-using System.Text;
-using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Infra.Database;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Linq;
 
 namespace LocacaoVeiculosApi
 {

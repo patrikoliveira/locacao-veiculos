@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using LocacaoVeiculosApi.Domain.Exceptions;
+using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 
 namespace LocacaoVeiculosApi.Domain.Entities
 {
@@ -10,14 +10,12 @@ namespace LocacaoVeiculosApi.Domain.Entities
     {
         [Column]
         [JsonIgnore]
-        public string CpfMatricula { get; set; }
+        public override string CpfMatricula { get; set; }
         [Column]
         [JsonIgnore]
         public override int TipoUsuario { get; set; }
-
         [Column]
         public string DataNascimento { get; set; }
-
         [Column]
         [JsonIgnore]
         public override int? EnderecoId { get; set; }
@@ -37,14 +35,13 @@ namespace LocacaoVeiculosApi.Domain.Entities
             }
         }
 
-        /*public override TipoUsuario Tipo
-        {
-            get
-            {
-                return TipoUsuario.Cliente;
-            }
-        }*/
-        
+        /* public override TipoUsuario Tipo
+         {
+             get{
+                 return TipoUsuario.Cliente;
+             }
+         }*/
+
         private static bool IsCpfValido()
         {
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
