@@ -1,3 +1,5 @@
+using LocacaoVeiculosApi.Domain.Entities.Enums;
+
 namespace LocacaoVeiculosApi.Domain.Entities
 {
     public interface IUsuario

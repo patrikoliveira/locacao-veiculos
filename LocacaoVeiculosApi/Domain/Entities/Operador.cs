@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 
 namespace LocacaoVeiculosApi.Domain.Entities
 {
@@ -9,18 +10,20 @@ namespace LocacaoVeiculosApi.Domain.Entities
     {
         [Column]
         [JsonIgnore]
-        public string CpfMatricula { get; set; }
+        public override string CpfMatricula { get; set; }
         [Column]
         [JsonIgnore]
         public override int TipoUsuario { get; set; }
-        
+
         [Column]
         [JsonIgnore]
-        public override int? EnderecoId {get;set;}
+        public override int? EnderecoId { get; set; }
 
         [Required]
-        public string Matricula{
-            get{
+        public string Matricula
+        {
+            get
+            {
                 return this.CpfMatricula;
             }
             set
