@@ -6,6 +6,7 @@ using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 using System;
 using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Authentication;
+using System.Collections.Generic;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -63,6 +64,10 @@ namespace LocacaoVeiculosApi.Services
             };
         }
 
+        public async Task<ICollection<T>> RetornaTodosUsuarioPorTipo<T>(TipoUsuario tipo){
+            return await repository.AllByType<T>(Convert.ToInt16(tipo));
+        }
+        
         public Task<Usuario> RetornaTodosUsuarios()
         {
             return repository.All();
