@@ -1,6 +1,6 @@
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
-    internal record ClienteJwt
+    public record ClienteJwt
     {
         public int id { get; set; }
         public string nome { get; set; }
