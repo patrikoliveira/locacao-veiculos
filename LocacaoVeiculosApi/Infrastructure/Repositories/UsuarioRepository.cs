@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.ViewModel;
+using LocacaoVeiculosApi.Infra.Database;
+using LocacaoVeiculosApi.Presentation.ViewModel;
 
 namespace LocacaoVeiculosApi.Infrastructure.Repositories
 {
