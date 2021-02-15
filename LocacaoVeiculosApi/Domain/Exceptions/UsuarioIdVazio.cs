@@ -1,6 +1,6 @@
 using System;
 
-namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
+namespace LocacaoVeiculosApi.Domain.Exceptions
 {
      [Serializable]
     public class UsuarioIdVazio : Exception

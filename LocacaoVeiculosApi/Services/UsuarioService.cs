@@ -5,8 +5,9 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 
-namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
+namespace LocacaoVeiculosApi.Services
 {
     public class UsuarioService
     {
@@ -85,8 +86,5 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
                 //await repository.Update(address);
                 await repository.Update(user);
         }
-
-
-
     }
 }
