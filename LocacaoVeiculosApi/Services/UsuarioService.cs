@@ -5,6 +5,7 @@ using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
+using System;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -14,17 +15,8 @@ namespace LocacaoVeiculosApi.Services
         {
             this.repository = repository;
         }
-
-        public UsuarioService(UsuarioRepository userRepository){  }
-
-        public UsuarioService(UsuarioRepository userRepository, EntityRepository entityRepository) : this(userRepository)
-        {
-            this.entityRepository = entityRepository;
-        }
-
         private const int OPERADOR = 2;
         private IUsuarioRepository repository;
-        private EntityRepository entityRepository;
 
         public async Task<UsuarioJwt> Login(Usuario user, Token token)
         {
@@ -44,23 +36,22 @@ namespace LocacaoVeiculosApi.Services
             return repository.All();
         }
 
-       /* public async Task Save(Usuario user) 
+       public async Task Save(Usuario user) 
         {
-            if (user.TipoUsuario == null) user.TipoUsuario = OPERADOR;
-
-            if (user.TipoUsuario == 1){
-                if (user.Endereco.ToString().IsNotNullOrEmpty<Usuario>){
-                 var size = await repository.CountByIdAndUser(user.Id, user.CpfMatricula);
-                  if(size > 0) throw new UsuarioUnico("CPF já cadastrado.");
-                    await repository.Save(user);
-                }
-            }
-            else if (user.TipoUsuario == 2){
-             var size = await repository.CountByUser(user.CpfMatricula);
-              if(size > 0) throw new UsuarioUnico("Matrícula já cadastrada.");
+            if (user.Id == 0)
+            {
+                if (user.Tipo == 0) user.TipoUsuario = Convert.ToInt16(user.Tipo);
+                var size = await repository.CountByCpfMatricula<Usuario>(user.CpfMatricula, user.Tipo);
+                if (size > 0) throw new UsuarioUnico("Documento já cadastrado."); 
                 await repository.Save(user);
             }
-        }*/
+            else
+            {
+                var size = await repository.CountByIdAndCpfMatricula<Usuario>(user.Id, user.CpfMatricula, user.Tipo);
+                if (size > 0) throw new UsuarioUnico("Documento já cadastrado.");
+                await repository.Update(user);
+            }
+        }
 
         public async Task Delete(int id)
         {

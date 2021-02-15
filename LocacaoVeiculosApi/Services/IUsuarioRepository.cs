@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 
 namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 {
@@ -13,5 +14,7 @@ namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
         Task<Usuario> FindByLoginAndPassword(string login, string password);
         Task CountByIdAndUser(int id, string cpfMatricula);
         Task CountByUser(string cpfMatricula);
+        Task CountByCpfMatricula<T>(string cpfMatricula, TipoUsuario tipo);
+        Task CountByIdAndCpfMatricula<T>(int id, string cpfMatricula, TipoUsuario tipo);
     }
 }

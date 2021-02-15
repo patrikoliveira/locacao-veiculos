@@ -32,12 +32,12 @@ namespace LocacaoVeiculosApi.Domain.Entities
             }
         }
 
-       /* public override TipoUsuario Tipo
+       public override TipoUsuario Tipo
         {
             get
             {
                 return TipoUsuario.Operador;
             }
-        }*/
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 
 namespace LocacaoVeiculosApi.Domain.Entities
@@ -35,12 +36,12 @@ namespace LocacaoVeiculosApi.Domain.Entities
             }
         }
 
-        /* public override TipoUsuario Tipo
+        public override TipoUsuario Tipo
          {
              get{
                  return TipoUsuario.Cliente;
              }
-         }*/
+         }
 
         private static bool IsCpfValido()
         {
