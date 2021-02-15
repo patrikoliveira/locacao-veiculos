@@ -1,5 +1,3 @@
-using LocacaoVeiculosApi.Domain.Entities.Enums;
-
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
     public record UsuarioCompleto
@@ -8,7 +6,13 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
          public string CpfMatricula {get;set;}
         public string Senha {get;set;}
         public string Nome {get;set;}
-        public Endereco Endereco {get;set;}
-        public TipoUsuario TipoUsuario {get;set;}
+        public string DataNascimento{get;set;}
+        public int EnderecoId {get;set;}
+        public string Cep {get;set;}
+        public string Logradouro {get;set;}
+        public string Numero {get;set;}
+        public string Complemento {get;set;}
+        public string Cidade {get;set;}
+        public string Estado {get;set;}
     }
 }
