@@ -52,6 +52,10 @@ namespace LocacaoVeiculosApi
             
             services.AddScoped<ICategoriaRepository<Categoria>, CategoriaRepository<Categoria>>();
             services.AddScoped<ICategoriaService<Categoria>, CategoriaService<Categoria>>();
+
+            services.AddScoped<EntityRepository<Marca>>();
+            services.AddScoped<EntityService<Marca>>();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));

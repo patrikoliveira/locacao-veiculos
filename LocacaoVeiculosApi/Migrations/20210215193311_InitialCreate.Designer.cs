@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LocacaoVeiculosApi.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20210213173223_InitialCreate")]
+    [Migration("20210215193311_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,10 +43,12 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
@@ -122,7 +124,7 @@ namespace LocacaoVeiculosApi.Migrations
                         .HasForeignKey("CategoriaId");
 
                     b.HasOne("LocacaoVeiculosApi.Domain.Entities.Marca", "Marca")
-                        .WithMany()
+                        .WithMany("Veiculos")
                         .HasForeignKey("MarcaId");
 
                     b.HasOne("LocacaoVeiculosApi.Domain.Entities.Modelo", "Modelo")
@@ -137,6 +139,11 @@ namespace LocacaoVeiculosApi.Migrations
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Categoria", b =>
+                {
+                    b.Navigation("Veiculos");
+                });
+
+            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Marca", b =>
                 {
                     b.Navigation("Veiculos");
                 });
