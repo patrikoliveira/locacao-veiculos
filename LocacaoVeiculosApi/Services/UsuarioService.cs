@@ -16,7 +16,7 @@ namespace LocacaoVeiculosApi.Services
         {
             this.repository = repository;
         }
-        private const int OPERADOR = 2;
+
         private IUsuarioRepository repository;
 
         public async Task<UsuarioJwt> Login(Usuario user, IToken token)
@@ -67,10 +67,18 @@ namespace LocacaoVeiculosApi.Services
         public async Task<ICollection<T>> RetornaTodosUsuarioPorTipo<T>(TipoUsuario tipo){
             return await repository.AllByType<T>(Convert.ToInt16(tipo));
         }
-        
-        public Task<Usuario> RetornaTodosUsuarios()
+
+        public async Task<Usuario> RetornaTodosUsuarios()
         {
-            return repository.All();
+           var todosUsuarios = await repository.AllByType<UsuarioCompleto>();
+            var usuario = new List<Usuario>();
+            foreach(var completeUser in todosUsuarios)
+            {
+                var user = EntityBuilder.Call<Usuario>(completeUser);
+                user.EnderecoId = EntityBuilder.Call<Endereco>(completeUser);
+                usuario.Add(user);
+            }
+            return usuario;
         }
 
         public async Task Save(Usuario user)
@@ -92,10 +100,7 @@ namespace LocacaoVeiculosApi.Services
 
         public async Task Delete(int id)
         {
-            if (id == 0) throw new UsuarioIdVazio("Id não pode ser vazio");
-            var user = await repository.FindById(id);
-            if (user == null) throw new UsuarioNotFound("Usuário não encontrado");
-            await repository.Delete(user);
+            await repository.Delete<IUsuario>(id);
         }
 
     }
