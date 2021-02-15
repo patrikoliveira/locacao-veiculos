@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.ViewModel;
 
 namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 {

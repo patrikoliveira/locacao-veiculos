@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Authentication;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.ViewModel;
 using LocacaoVeiculosApi.Infra.Authentication;
-using LocacaoVeiculosApi.Infra.Database;
+using LocacaoVeiculosApi.Infrastructure.Repositories;
+using LocacaoVeiculosApi.Presentation.ViewModel;
 
 namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 {
