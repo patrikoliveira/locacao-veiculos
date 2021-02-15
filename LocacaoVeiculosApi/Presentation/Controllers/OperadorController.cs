@@ -1,4 +1,4 @@
-using LocacaoVeiculosApi.Domain.UseCase.UseServices;
+using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

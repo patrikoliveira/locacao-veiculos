@@ -1,4 +1,4 @@
-using LocacaoVeiculosApi.Domain.ViewModel;
+using LocacaoVeiculosApi.Presentation.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

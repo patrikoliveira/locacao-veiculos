@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.UseCase.UseServices;
-using LocacaoVeiculosApi.Domain.ViewModel;
+using LocacaoVeiculosApi.Domain.Exceptions;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
+using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

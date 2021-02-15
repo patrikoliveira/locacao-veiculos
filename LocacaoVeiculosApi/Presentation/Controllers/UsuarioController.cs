@@ -1,11 +1,12 @@
 using LocacaoVeiculosApi.Infra.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.ViewModel;
+using LocacaoVeiculosApi.Services;
+using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Domain.Exceptions;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
