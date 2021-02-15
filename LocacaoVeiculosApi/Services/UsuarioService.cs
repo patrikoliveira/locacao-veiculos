@@ -6,6 +6,7 @@ using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
+using LocacaoVeiculosApi.Domain.Exceptions;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -20,7 +21,7 @@ namespace LocacaoVeiculosApi.Services
         private const int OPERADOR = 2;
         private IUsuarioRepository repository;
 
-        public async Task<UsuarioJwt> Login(Usuario user, IToken token)
+        public async Task<UsuarioJwt> Login(Usuario user, Token token)
         {
             var loggedUser = await repository.FindByLoginAndPassword(user.CpfMatricula, user.Senha);
             if (loggedUser == null) throw new UsuarioNotFound("Usuário e senha inválidos.");
@@ -31,11 +32,6 @@ namespace LocacaoVeiculosApi.Services
                 userType = loggedUser.TipoUsuario.ToString(),
                 Token = token.GerarToken(loggedUser)
             };
-        }
-
-        internal Task<object> Login(UsuarioLogin userLogin, Token token)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<Usuario> RetornaTodosUsuarios()
