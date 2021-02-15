@@ -1,4 +1,4 @@
-namespace LocacaoVeiculosApi.Domain.ViewModel
+namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
     public record UsuarioLogin
     {

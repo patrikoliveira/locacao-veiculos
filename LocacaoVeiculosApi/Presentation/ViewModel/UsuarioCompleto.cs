@@ -1,6 +1,6 @@
 using LocacaoVeiculosApi.Domain.Entities;
 
-namespace LocacaoVeiculosApi.Domain.ViewModel
+namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
     public record UsuarioCompleto
     {
