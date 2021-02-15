@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
@@ -14,35 +13,43 @@ using Microsoft.Extensions.Logging;
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     [ApiController]
-    public class OperadorController
+    public class ClienteController : ControllerBase
     {
         private readonly UsuarioService _usuarioService;
-        private readonly ILogger<OperadorController> _logger;
+        private readonly ILogger<ClienteController> _logger;
 
-        public OperadorController(ILogger<OperadorController> logger)
+        public ClienteController(ILogger<ClienteController> logger)
         {
             _logger = logger;
             _usuarioService = new UsuarioService(new UsuarioRepository(), new EntityRepository());
         }
 
         [HttpGet]
-        [Route("/operador")]
+        [Route("/cliente")]
         [Authorize(Roles = "Cliente, Operador")]
-        public async Task<ICollection<Operador>> Index()
+        public async Task<ICollection<Cliente>> Index()
         {
-            return await _usuarioService.RetornaTodosUsuarioPorTipo<Operador>(TipoUsuario.Operador);
+            return await _usuarioService.RetornaTodosUsuarioPorTipo<Cliente>(TipoUsuario.Cliente);
         }
 
         [HttpPost]
-        [Route("/operador")]
+        [Route("/users")]
+        [Route("/cliente")]
         [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Create([FromBody] OperadorSalvar op)
+        public async Task<IActionResult> Create([FromBody] ClienteSalvar cliente)
         {
-            var oper = EntityBuilder.Call<Operador>(op);
+            var cli = EntityBuilder.Call<Cliente>(cliente);
             try
             {
-                await _usuarioService.Save(oper);
+                await _usuarioService.Save(cli);
                 return StatusCode(201);
+            }
+            catch (CpfInvalidoException err)
+            {
+                return StatusCode(401, new
+                {
+                    Message = err.Message
+                });
             }
             catch (UsuarioUnico err)
             {
@@ -54,16 +61,23 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpPut]
-        [Route("/operador/{id}")]
+        [Route("/cliente/{id}")]
         [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Update(int id, [FromBody] OperadorSalvar op)
+        public async Task<IActionResult> Update(int id, [FromBody] ClienteSalvar cliente)
         {
-            var oper = EntityBuilder.Call<Operador>(op);
-            oper.Id = id;
+            var cli = EntityBuilder.Call<Cliente>(cliente);
+            cli.Id = id;
             try
             {
-                await _usuarioService.Save(oper);
+                await _usuarioService.Save(cli);
                 return StatusCode(204);
+            }
+            catch (CpfInvalidoException err)
+            {
+                return StatusCode(401, new
+                {
+                    Message = err.Message
+                });
             }
             catch (UsuarioUnico err)
             {
@@ -75,7 +89,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpDelete]
-        [Route("/operador/{id}")]
+        [Route("/cliente/{id}")]
         [Authorize(Roles = "Operador")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -99,5 +113,6 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 });
             }
         }
+        
     }
 }

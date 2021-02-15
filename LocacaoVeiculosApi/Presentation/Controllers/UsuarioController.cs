@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
+    [ApiController]
     public class UsuarioController : ControllerBase
     {
         private readonly EntityService _entityService;
