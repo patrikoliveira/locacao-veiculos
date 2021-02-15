@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Authentication;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using LocacaoVeiculosApi.Domain.ViewModel;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Infra.Database;
-using Microsoft.Extensions.Logging;
 
 namespace LocacaoVeiculosApi.Domain.UseCase.UseServices
 {

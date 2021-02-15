@@ -7,7 +7,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.ViewModel;
 
-namespace LocacaoVeiculosApi.Controllers
+namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     public class UsuarioController : ControllerBase
     {

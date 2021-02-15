@@ -2,12 +2,12 @@ using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using LocacaoVeiculosApi.Domain.ViewModel;
 using LocacaoVeiculosApi.Infra.Authentication;
-using LocacaoVeiculosApi.Infra.Database;
+using LocacaoVeiculosApi.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace LocacaoVeiculosApi.Controllers
+namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     [ApiController]    
     public class LoginController : ControllerBase

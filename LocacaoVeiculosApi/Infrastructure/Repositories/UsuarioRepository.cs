@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.ViewModel;
 
-namespace LocacaoVeiculosApi.Infra.Database
+namespace LocacaoVeiculosApi.Infrastructure.Repositories
 {
     public class UsuarioRepository
     {   

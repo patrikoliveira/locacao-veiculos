@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace LocacaoVeiculosApi.Controllers
+namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     internal class HomeController
     {

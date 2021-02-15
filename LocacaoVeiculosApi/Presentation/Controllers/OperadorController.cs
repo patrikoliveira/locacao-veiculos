@@ -2,7 +2,7 @@ using LocacaoVeiculosApi.Domain.UseCase.UseServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace LocacaoVeiculosApi.Controllers
+namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     [ApiController]
     public class OperadorController
