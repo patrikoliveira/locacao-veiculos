@@ -13,7 +13,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
         public override string CpfMatricula { get; set; }
         [Column]
         [JsonIgnore]
-        public override int TipoUsuario { get; set; }
+        public override TipoUsuario TipoUsuario { get; set; }
 
         [Column]
         [JsonIgnore]
