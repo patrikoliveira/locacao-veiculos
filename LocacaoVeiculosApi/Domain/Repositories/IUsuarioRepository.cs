@@ -12,5 +12,7 @@ namespace LocacaoVeiculosApi.Domain.Repositories
         Task Update(Usuario user);
         Task<ICollection<UsuarioView>> All();
         Task Delete(Usuario user);
+        Task<ICollection<T>> AllByType<T>(short tipoUsuario);
+        Task FindByIdAsync(int id);
     }
 }

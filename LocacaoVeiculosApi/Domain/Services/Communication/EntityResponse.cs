@@ -1,5 +1,3 @@
-using System;
-using System.Data.Entity.Infrastructure.Design;
 using LocacaoVeiculosApi.Domain.Entities;
 
 namespace LocacaoVeiculosApi.Domain.Services.Communication

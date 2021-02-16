@@ -3,7 +3,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 
-namespace LocacaoVeiculosApi.Domain.Service
+namespace LocacaoVeiculosApi.Domain.Services
 {
     public interface IUsuarioService<T> where T : class
     {

@@ -15,6 +15,8 @@ namespace LocacaoVeiculosApi.Infrastructure.Repositories
         {
         }
 
+        public async Task<ICollection<T>> AllByType<T>(short tipoUsuario) => await _context.Usuarios.AllByType<T>(tipoUsuario);
+
         public async Task<Usuario> FindByLoginAndPassword(string login, string password)
         {
             return await _context.Usuarios.Where(u => u.CpfMatricula == login && u.Senha == password).FirstOrDefaultAsync();
