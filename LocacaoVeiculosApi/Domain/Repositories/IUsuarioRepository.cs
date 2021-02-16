@@ -14,5 +14,8 @@ namespace LocacaoVeiculosApi.Domain.Repositories
         Task Delete(Usuario user);
         Task<ICollection<T>> AllByType<T>(short tipoUsuario);
         Task FindByIdAsync(int id);
+        Task<IUsuario> FindByLoginAndPassword<T>(object cpfMatricula, object senha, short tipoUsuario);
+        Task All<T>();
+        Task CountByIdAndCpfMatricula<T1>(int id, string cpfMatricula, short tipo);
     }
 }

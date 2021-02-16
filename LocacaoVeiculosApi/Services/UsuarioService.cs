@@ -6,14 +6,13 @@ using System;
 using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Authentication;
 using System.Collections.Generic;
-using LocacaoVeiculosApi.Domain.Service;
 using LocacaoVeiculosApi.Domain.Repositories;
+using LocacaoVeiculosApi.Domain.Services;
 
 namespace LocacaoVeiculosApi.Services
 {
     public class UsuarioService<Usuario> : IUsuarioService<T> where Usuario : class
     {
-
         private readonly IUsuarioRepository<Usuario> _usuarioRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -40,7 +39,6 @@ namespace LocacaoVeiculosApi.Services
                 Token = token.GerarToken(usuarioLogado)
             };
         }
-
         public async Task<OperadorJwt> Login(OperadorLogin userLogin, IToken token)
         {
             IUsuario usuarioLogado = await _usuarioRepository.FindByLoginAndPassword<Operador>(userLogin.Matricula, userLogin.Senha, Convert.ToInt16(TipoUsuario.Operador));
@@ -74,12 +72,12 @@ namespace LocacaoVeiculosApi.Services
 
         public async Task<Usuario> RetornaTodosUsuarios()
         {
-           var todosUsuarios = await _usuarioRepository.AllByType<UsuarioCompleto>();
+            var todosUsuarios = await _usuarioRepository.All<UsuarioCompleto>();
             var usuario = new List<Usuario>();
-            foreach(var completeUser in todosUsuarios)
+            foreach(var usuarioCompleto in todosUsuarios)
             {
-                var user = EntityBuilder.Call<Usuario>(completeUser);
-                user.EnderecoId = EntityBuilder.Call<Endereco>(completeUser);
+                var user = EntityBuilder.Call<Usuario>(usuarioCompleto);
+                //user.EndrecoId = EntityBuilder.Call<Endereco>(usuarioCompleto);
                 usuario.Add(user);
             }
             return usuario;
