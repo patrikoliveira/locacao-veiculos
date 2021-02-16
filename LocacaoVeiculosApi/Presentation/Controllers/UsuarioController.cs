@@ -3,21 +3,23 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using LocacaoVeiculosApi.Domain.Entities;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Services;
 using System.Collections.Generic;
+using LocacaoVeiculosApi.Domain.Services;
+using AutoMapper;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     [ApiController]
-    public class UsuarioController : ControllerBase
+    [Route("/api/[controller]")]
+    public class UsuarioController : Controller
     {
-        private readonly EntityService _entityService;
-        private readonly ILogger<UsuarioController> _logger;
+        private readonly IUsuarioService<Usuario> _usuarioService;
+        private readonly IMapper _mapper;
 
-        public UsuarioController(ILogger<UsuarioController> logger)
+        public UsuarioController(IUsuarioService<Usuario> usuarioService, IMapper mapper)
         {
-            _logger = logger;
-            _entityService = new EntityService(new EntityRepository());
+            _usuarioService = usuarioService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -25,7 +27,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [Authorize(Roles = "Operador")]
         public async Task<ICollection<Usuario>> Index()
         {
-            return await _entityService.All<Usuario>();
+            return await _usuarioService.ListAsync();
         }
     }
 }

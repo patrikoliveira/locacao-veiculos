@@ -17,5 +17,6 @@ namespace LocacaoVeiculosApi.Domain.Services
         Task<ICollection<T>> RetornaTodosUsuarioPorTipo<T1>(TipoUsuario cliente);
         Task<T> Login(ClienteLogin userLogin, Token token);
         Task<T> Login(OperadorLogin userLogin, Token token);
+        Task<ICollection<Usuario>> ListAsync();
     }
 }
