@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 
@@ -12,5 +14,6 @@ namespace LocacaoVeiculosApi.Domain.Services
         Task Save(Usuario user);
         Task Delete(int id);
         Task Update(Usuario user);
+        Task<ICollection<T>> RetornaTodosUsuarioPorTipo<T1>(TipoUsuario cliente);
     }
 }
