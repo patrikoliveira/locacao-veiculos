@@ -7,7 +7,7 @@ using LocacaoVeiculosApi.Domain.Entities.Enums;
 namespace LocacaoVeiculosApi.Domain.Entities
 {
     [Table("users")]
-    public class Usuario : IUsuario
+    public class Usuario : IEntity
     {
         [Key]
 		[Column]
@@ -26,7 +26,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
 		[Column]
         public virtual int? EnderecoId { get; set; }
         [Required]
-        public virtual int TipoUsuario { get; set; }
+        public virtual TipoUsuario TipoUsuario { get; set; }
 
         public virtual TipoUsuario Tipo { get { return (TipoUsuario)Enum.ToObject(typeof(TipoUsuario), this.Tipo); } }
         
