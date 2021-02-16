@@ -1,12 +1,27 @@
-using LocacaoVeiculosApi.Domain.Entities.Enums;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Repositories;
+using LocacaoVeiculosApi.Domain.Services;
+using LocacaoVeiculosApi.Infrastructure.Database;
+using LocacaoVeiculosApi.Infrastructure.Repositories;
+using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Linq;
 
 namespace LocacaoVeiculosApi
 {
@@ -26,22 +41,6 @@ namespace LocacaoVeiculosApi
             //services.AddDbContext<EntityContext>(options => options.UseNpgsql(jAppSettings["ConnectionString"].ToString()));
 
             //var key = Encoding.ASCII.GetBytes(jAppSettings["JwtToken"].ToString());
-            
-            services.AddControllersWithViews();
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "locacao_veiculos_api", Version = "v1" });
-            });
-
-            services.AddMvc(config =>
-            {
-               var policy = new AuthorizationPolicyBuilder()
-                               .RequireAuthenticatedUser()
-                               .Build();
-               config.Filters.Add(new AuthorizeFilter(policy));
-            });
 
            /*services.AddAuthentication(x =>
             {
@@ -59,13 +58,37 @@ namespace LocacaoVeiculosApi
                     ValidateAudience = false
                 };
             });*/
+            
+            services.AddControllersWithViews();
+            services.AddMvc();
+            services.AddDbContext<EntityContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
 
-            services.AddAuthorization(options =>
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
             {
-               options.AddPolicy(TipoUsuario.Operador.ToString(), policy => policy.RequireClaim(TipoUsuario.Operador.ToString()));
-               options.AddPolicy(TipoUsuario.Cliente.ToString(), policy => policy.RequireClaim(TipoUsuario.Cliente.ToString()));
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocacaoVeiculosApi", Version = "v1" });
             });
+            
+            services.AddScoped<IVeiculoRepository<Veiculo>, VeiculoRepository<Veiculo>>();
+            services.AddScoped<IVeiculoService<Veiculo>, VeiculoService<Veiculo>>();
+            
+            services.AddScoped<ICategoriaRepository<Categoria>, CategoriaRepository<Categoria>>();
+            services.AddScoped<ICategoriaService<Categoria>, CategoriaService<Categoria>>();
+
+            services.AddScoped<EntityRepository<Marca>>();
+            services.AddScoped<EntityService<Marca>>();
+            
+            services.AddScoped<EntityRepository<Modelo>>();
+            services.AddScoped<EntityService<Modelo>>();
+            
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -74,7 +97,7 @@ namespace LocacaoVeiculosApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "locacao_veiculos_api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LocacaoVeiculosApi v1"));
             }
 
             app.UseHttpsRedirection();

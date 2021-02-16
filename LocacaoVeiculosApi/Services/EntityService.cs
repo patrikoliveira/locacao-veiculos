@@ -1,40 +1,120 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.Entities.Exceptions;
+using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Repositories;
+using LocacaoVeiculosApi.Domain.Services;
+using LocacaoVeiculosApi.Domain.Services.Communication;
+using LocacaoVeiculosApi.Extensions;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
-using LocacaoVeiculosApi.Presentation.Controllers;
+using Neo4jClient.DataAnnotations.Cypher.Functions;
 
 namespace LocacaoVeiculosApi.Services
 {
-    public class EntityService
+    public class EntityService<T> : IEntityService<T> where T : class
     {
-        public EntityService(IEntityRepository repository)
+        private readonly EntityRepository<T> _entityRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public EntityService(EntityRepository<T> entityRepository, IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            _entityRepository = entityRepository;
+            _unitOfWork = unitOfWork;
+        }
+        
+        public async Task<IEnumerable<T>> ListAsync()
+        {
+            return await _entityRepository.ListAsync();
         }
 
-        public EntityService(EntityRepository entityRepository)
+        public async Task<EntityResponse> GetAsync(int id)
         {
+            var entityExistente = await _entityRepository.FindByIdAsync(id);
+            
+            if (entityExistente == null)
+            {
+                return new EntityResponse("Categoria não encontrada.");
+            }
+            
+            return new EntityResponse((IEntity) entityExistente);
         }
 
-        private IEntityRepository repository;
-
-        public virtual async Task Save<T>(T entity)
+        public async Task<EntityResponse> CreateAsync(T entity)
         {
-            await repository.Save(entity);
+            try
+            {
+                await _entityRepository.AddAsync(entity);
+                await _unitOfWork.CompleteAsync();
+
+                return new EntityResponse((IEntity) entity);
+            }
+            catch (Exception e)
+            {
+                return new EntityResponse($"Um erro ocorreu ao salvar a {entity.GetType().Name}: {e.Message}");
+            }
+        }
+        
+        private static void PropertySet(object p, string propName, object value)
+        {
+            Type t = p.GetType();
+            PropertyInfo info = t.GetProperty(propName);
+            if (info == null)
+                return;
+            if (!info.CanWrite)
+                return;
+            info.SetValue(p, value, null);
         }
 
-        public async Task Delete<T>(int id)
+        public async Task<EntityResponse> UpdateAsync(int id, T entity)
         {
-            if (id == 0) throw new UsuarioIdVazio("Id não pode ser vazio.");
-            var user = await repository.FindById<T>(id);
-            if (user == null) throw new UsuarioIdVazio("Registro não encontrado.");
-            await repository.Delete(user);
+            var entityExistente = await _entityRepository.FindByIdAsync(id);
+
+            if (entityExistente == null)
+            {
+                return new EntityResponse($"{entity.GetType().Name} não encontrada.");
+            }
+
+
+            foreach (PropertyInfo prop in entity.GetType().GetProperties())
+            {
+                if (prop.Name != "Id")
+                {
+                    PropertySet(entityExistente, prop.Name, prop.GetValue(entity, null));
+                }
+            }
+            
+            try
+            {
+                _entityRepository.Update(entityExistente);
+                await _unitOfWork.CompleteAsync();
+
+                return new EntityResponse((IEntity) entityExistente);
+            }
+            catch (Exception e)
+            {
+                return new EntityResponse($"Um erro ocorreu ao atualizar a {entity.GetType().Name}: {e.Message}");
+            }
         }
 
-        public async Task<ICollection<T>> All<T>()
+        public async Task<EntityResponse> DeleteAsync(int id)
         {
-           return await repository.All<T>();
+            var entityExistente = await _entityRepository.FindByIdAsync(id);
+
+            if (entityExistente == null)
+                return new EntityResponse("Entidade não encontrada.");
+
+            try
+            {
+                _entityRepository.Remove(entityExistente);
+                await _unitOfWork.CompleteAsync();
+
+                return new EntityResponse((IEntity) entityExistente);
+            }
+            catch (Exception e)
+            {
+                return new EntityResponse($"Um erro ocorreu ao deletar a {entityExistente.GetType().Name}: {e.Message}");
+            }
         }
     }
 }

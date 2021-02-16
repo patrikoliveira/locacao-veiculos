@@ -1,79 +1,40 @@
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Threading.Tasks;
+using LocacaoVeiculosApi.Domain.Repositories;
+using LocacaoVeiculosApi.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
-namespace LocacaoVeiculosApi.Presentation.Controllers
+namespace LocacaoVeiculosApi.Infrastructure.Repositories
 {
-    public class EntityRepository
+    public class EntityRepository<T> : BaseRepository, IEntityRepository<T> where T : class
     {
-       public EntityRepository()
+        public EntityRepository(EntityContext context) : base(context)
         {
-            this.sqlDriver = new SqlDriver();
-        }
-        public SqlDriver sqlDriver;
-
-        public async Task<ICollection<T>> All<T>()
-        {
-            return await this.sqlDriver.All<T>();
         }
 
-        public async Task Delete<T>(int id)
+        public async Task<IEnumerable<T>> ListAsync()
         {
-            var instance = MapTable.CreateInstanceAndSetId<T>(id);
-            await this.sqlDriver.Delete<T>(instance);
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task Delete<T>(T entity)
+        public async Task<T> FindByIdAsync(int id)
         {
-            await this.sqlDriver.Delete(entity);
+            return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> FindById<T>(int id)
+        public async Task AddAsync(T entity)
         {
-            return await this.sqlDriver.FindById<T>(id);
+            await _context.Set<T>().AddAsync(entity);
         }
 
-        public async Task Save<T>(T entity)
+        public void Update(T entity)
         {
-            await this.sqlDriver.Save(entity);
+            _context.Set<T>().Update(entity);
         }
 
-        public async Task Update<T>(T entity)
+        public void Remove(T entity)
         {
-            await this.sqlDriver.Update(entity);
-        }
-
-
-        public async Task<ICollection<T>> All<T>(string key, ICollection<dynamic> parameters = null)
-        {
-            return await this.sqlDriver.AllByPrecedure<T>(key, PrepareParams(parameters));
-        }
-
-        public async Task<T> Get<T>(string key, ICollection<dynamic> parameters = null)
-        {
-            return await this.sqlDriver.GetByPrecedure<T>(key, PrepareParams(parameters));
-        }
-
-        public static List<DbParameter> PrepareParams(ICollection<dynamic> parameters = null)
-        {
-            List<DbParameter> dbParams = null;
-            if (parameters != null)
-            {
-                foreach (var param in parameters)
-                {
-                    dbParams = new List<DbParameter>();
-                    string key = param.GetType().GetProperty("Key").GetValue(param, null);
-                    object val = param.GetType().GetProperty("Value").GetValue(param, null);
-
-                    var parameterType = new SqlParameter($"@{key}", System.Data.SqlDbType.VarChar)
-                    {
-                        Value = val
-                    };
-                    dbParams.Add(parameterType);
-                }
-            }
-
-            return dbParams;
+            _context.Set<T>().Remove(entity);
         }
     }
 }

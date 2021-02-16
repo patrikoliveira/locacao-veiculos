@@ -1,22 +1,18 @@
-using Microsoft.EntityFrameworkCore;
-using LocacaoVeiculosApi.Domain.Entities;
-using Newtonsoft.Json.Linq;
-using System.IO;
 using System;
+using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using LocacaoVeiculosApi.Domain.Entities;
 
-namespace LocacaoVeiculosApi.Infra.Database
+namespace LocacaoVeiculosApi.Infrastructure.Database
 {
     public class EntityContext : DbContext
     {
-        public EntityContext(DbContextOptions<EntityContext> options): base(options){}
-        public EntityContext(){ }
+        public EntityContext(DbContextOptions<EntityContext> options) : base(options) {}
         
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
-            optionsBuilder.UseNpgsql(jAppSettings["ConnectionString"].ToString());
-        }
-        
-        public DbSet<Usuario> Users { get; set; }
+        public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<Modelo> Modelos { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
     }
 }
