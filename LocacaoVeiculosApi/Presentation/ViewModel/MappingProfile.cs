@@ -1,5 +1,6 @@
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Extensions;
 
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
@@ -10,11 +11,16 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<Categoria, CategoriaDto>();
             CreateMap<Marca, MarcaDto>();
             CreateMap<Modelo, ModeloDto>();
-            
+            CreateMap<Veiculo, VeiculoDto>();
+    
             CreateMap<CreateCategoriaDto, Categoria>();
             CreateMap<CreateMarcaDto, Marca>();
             CreateMap<CreateModeloDto, Modelo>();
+            CreateMap<CreateVeiculoDto, Veiculo>();
+
+            CreateMap<ModeloDto, Modelo>();
+            CreateMap<MarcaDto, Marca>();
+            CreateMap<CategoriaDto, Categoria>();
         }
-        
     }
 }

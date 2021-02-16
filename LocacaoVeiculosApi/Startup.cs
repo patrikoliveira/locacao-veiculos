@@ -46,18 +46,18 @@ namespace LocacaoVeiculosApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocacaoVeiculosApi", Version = "v1" });
             });
-            
-            services.AddScoped<IVeiculoRepository<Veiculo>, VeiculoRepository<Veiculo>>();
-            services.AddScoped<IVeiculoService<Veiculo>, VeiculoService<Veiculo>>();
-            
-            services.AddScoped<ICategoriaRepository<Categoria>, CategoriaRepository<Categoria>>();
-            services.AddScoped<ICategoriaService<Categoria>, CategoriaService<Categoria>>();
+
+            services.AddScoped<EntityRepository<Categoria>>();
+            services.AddScoped<EntityService<Categoria>>();
 
             services.AddScoped<EntityRepository<Marca>>();
             services.AddScoped<EntityService<Marca>>();
             
             services.AddScoped<EntityRepository<Modelo>>();
             services.AddScoped<EntityService<Modelo>>();
+
+            services.AddScoped<EntityRepository<Veiculo>>();
+            services.AddScoped<EntityService<Veiculo>>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
