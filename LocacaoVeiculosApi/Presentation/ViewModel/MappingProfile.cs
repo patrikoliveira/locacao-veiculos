@@ -1,6 +1,5 @@
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Extensions;
 
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {

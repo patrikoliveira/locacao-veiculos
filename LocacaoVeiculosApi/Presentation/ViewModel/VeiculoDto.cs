@@ -1,5 +1,3 @@
-using LocacaoVeiculosApi.Domain.Entities;
-
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
     public class VeiculoDto
@@ -15,8 +13,7 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
         public CategoriaDto Categoria { get; set; }
         
         public string Combustivel { get; set; }
-        // public Combustivel Combustivel { get; set; }
-        
+
         public float ValorHora { get; set; }
         
         public int CapacidadePortaMalas { get; set; }

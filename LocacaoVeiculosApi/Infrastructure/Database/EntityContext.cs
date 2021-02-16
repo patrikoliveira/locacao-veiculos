@@ -1,7 +1,4 @@
-using System;
-using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using LocacaoVeiculosApi.Domain.Entities;
 
 namespace LocacaoVeiculosApi.Infrastructure.Database

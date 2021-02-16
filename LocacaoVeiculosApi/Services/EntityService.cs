@@ -8,9 +8,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Repositories;
 using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Domain.Services.Communication;
-using LocacaoVeiculosApi.Extensions;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
-using Neo4jClient.DataAnnotations.Cypher.Functions;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -34,7 +32,7 @@ namespace LocacaoVeiculosApi.Services
         {
             var entityExistente = await _entityRepository.Filter(predicate, includes);
             
-            if (entityExistente == null)
+            if (entityExistente == null || entityExistente.Count() == 0)
             {
                 return new EntityResponse("Entidade não encontrada.");
             }

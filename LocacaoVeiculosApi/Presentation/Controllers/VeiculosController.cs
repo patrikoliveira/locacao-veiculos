@@ -1,16 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Extensions;
-using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Neo4jClient.DataAnnotations.Cypher.Functions;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
