@@ -14,5 +14,6 @@ namespace LocacaoVeiculosApi.Infrastructure.Database
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 }

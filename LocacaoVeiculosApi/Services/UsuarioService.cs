@@ -8,7 +8,6 @@ using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Authentication;
 using System.Collections.Generic;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
-using LocacaoVeiculosApi.Presentation.Controllers;
 
 namespace LocacaoVeiculosApi.Services
 {

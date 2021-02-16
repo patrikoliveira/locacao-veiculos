@@ -3,54 +3,50 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Infra.Database;
 using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Infrastructure.Database;
+using LocacaoVeiculosApi.Domain.Repositories;
 
 namespace LocacaoVeiculosApi.Infrastructure.Repositories
 {
-    public class UsuarioRepository
-    {   
-        private readonly EntityContext context;
-        public UsuarioRepository(EntityContext context)
-        {
-          this.context = context;
-        }
-
-        public UsuarioRepository()
+    public class UsuariosRepository<T> : BaseRepository, IUsuarioRepository<T> where T : class
+    {
+        public UsuariosRepository(EntityContext context) : base(context)
         {
         }
 
         public async Task<Usuario> FindByLoginAndPassword(string login, string password)
         {
-            return await context.Users.Where(u => u.CpfMatricula == login && u.Senha == password).FirstOrDefaultAsync();
+            return await _context.Usuarios.Where(u => u.CpfMatricula == login && u.Senha == password).FirstOrDefaultAsync();
         }
 
         public async Task Save(Usuario user)
         {
-          context.Users.Add(user);
-          await context.SaveChangesAsync(); 
+            _context.Usuarios.Add(user);
+            await _context.SaveChangesAsync();
         }
 
-         public async Task Update(Usuario user)
+        public async Task Update(Usuario user)
         {
-          context.Users.Update(user);
-          await context.SaveChangesAsync(); 
+            _context.Usuarios.Update(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<ICollection<UsuarioView>> All()
         {
-            return await context.Users.Select( u => new UsuarioView {
-                        Id = u.Id,
-                        CpfMatricula = u.CpfMatricula,
-                        Nome = u.Nome,
-                        TipoUsuario = u.TipoUsuario.ToString()
-                    }).ToListAsync();
+            return await _context.Usuarios.Select(u => new UsuarioView
+            {
+                Id = u.Id,
+                CpfMatricula = u.CpfMatricula,
+                Nome = u.Nome,
+                TipoUsuario = u.TipoUsuario.ToString()
+            }).ToListAsync();
         }
 
-         public async Task Delete(Usuario user)
+        public async Task Delete(Usuario user)
         {
-          context.Users.Remove(user);
-          await context.SaveChangesAsync(); 
+            _context.Usuarios.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
     }
