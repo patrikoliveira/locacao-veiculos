@@ -7,15 +7,14 @@ namespace LocacaoVeiculosApi.Domain.Repositories
 {
     public interface IUsuarioRepository<T> where T : class
     {
-        Task<Usuario> FindByLoginAndPassword(string login, string password);
-        Task Save(Usuario user);
-        Task Update(Usuario user);
         Task<ICollection<UsuarioView>> All();
-        Task Delete(Usuario user);
         Task<ICollection<T>> AllByType<T>(short tipoUsuario);
         Task FindByIdAsync(int id);
         Task<IUsuario> FindByLoginAndPassword<T>(object cpfMatricula, object senha, short tipoUsuario);
-        Task All<T>();
         Task CountByIdAndCpfMatricula<T1>(int id, string cpfMatricula, short tipo);
+        Task AddAsync<Usuario>(Usuario entity) where Usuario : class;
+        Task Update<Usuario>(Usuario user) where Usuario : class;
+        Task Save<Usuario>(Usuario user) where Usuario : class;
+        Task CountByCpfMatricula<T>(string cpfMatricula, short tipo);
     }
 }

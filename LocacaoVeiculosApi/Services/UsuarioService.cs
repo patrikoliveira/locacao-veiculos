@@ -8,6 +8,7 @@ using LocacaoVeiculosApi.Domain.Authentication;
 using System.Collections.Generic;
 using LocacaoVeiculosApi.Domain.Repositories;
 using LocacaoVeiculosApi.Domain.Services;
+using LocacaoVeiculosApi.Domain.Services.Communication;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -22,12 +23,12 @@ namespace LocacaoVeiculosApi.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UsuarioJwt> Login(Usuario user, IToken token)
+        public async Task<UsuarioJwt> Login(string CpfMatricula, string Senha, IToken token)
         {
             IUsuario usuarioLogado;
-            if (user.CpfMatricula.Length >= 11)
-                usuarioLogado = await _usuarioRepository.FindByLoginAndPassword<Cliente>(user.CpfMatricula, user.Senha, Convert.ToInt16(TipoUsuario.Cliente));
-            else usuarioLogado = await _usuarioRepository.FindByLoginAndPassword<Operador>(user.CpfMatricula, user.Senha, Convert.ToInt16(TipoUsuario.Operador));
+            if (CpfMatricula.Length >= 11)
+                usuarioLogado = await _usuarioRepository.FindByLoginAndPassword<Cliente>(CpfMatricula, Senha, Convert.ToInt16(TipoUsuario.Cliente));
+            else usuarioLogado = await _usuarioRepository.FindByLoginAndPassword<Operador>(CpfMatricula, Senha, Convert.ToInt16(TipoUsuario.Operador));
 
             if (usuarioLogado == null) throw new UsuarioNotFound("Usuário não encontrado. Login ou senha inválidos.");
             return new UsuarioJwt()
@@ -72,7 +73,7 @@ namespace LocacaoVeiculosApi.Services
 
         public async Task<Usuario> RetornaTodosUsuarios()
         {
-            var todosUsuarios = await _usuarioRepository.All<UsuarioCompleto>();
+            var todosUsuarios = await _usuarioRepository.All();
             var usuario = new List<Usuario>();
             foreach(var usuarioCompleto in todosUsuarios)
             {
@@ -100,22 +101,36 @@ namespace LocacaoVeiculosApi.Services
             }
         }
 
+        
+        public async Task<UsuarioResponse> CreateAsync(Usuario entity){
+            try
+            {
+                await _usuarioRepository.AddAsync(entity);
+                await _unitOfWork.CompleteAsync();
+
+                return new UsuarioResponse(entity);
+            }
+            catch (Exception e)
+            {
+                return new UsuarioResponse($"Um erro ocorreu ao salvar o usuário: {e.Message}");
+            }
+        }
+
         public async Task<UsuarioResponse> DeleteAsync(int id)
         {
             var usuarioExistente = await _usuarioRepository.FindByIdAsync(id);
-
-             if (usuarioExistente == null)
+            if (usuarioExistente == null)
                 return new UsuarioResponse("Usuário não encontrado.");
+
             try
             {
                 _usuarioRepository.Remove(usuarioExistente);
                 await _unitOfWork.CompleteAsync();
-
                 return new UsuarioResponse(usuarioExistente);
             }
-            catch (UsuarioNotFound e)
+            catch (Exception e)
             {
-                return new UsuarioResponse($"Um erro ocorreu ao deletar a categoria: {e.Message}");
+                return new UsuarioResponse($"Um erro ocorreu ao deletar o usuário: {e.Message}");
             }
         }
     }

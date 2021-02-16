@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Entities.Enums;
+using LocacaoVeiculosApi.Domain.Services.Communication;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 
@@ -18,5 +19,6 @@ namespace LocacaoVeiculosApi.Domain.Services
         Task<T> Login(ClienteLogin userLogin, Token token);
         Task<T> Login(OperadorLogin userLogin, Token token);
         Task<ICollection<Usuario>> ListAsync();
+        Task<UsuarioResponse> DeleteAsync(int id);
     }
 }

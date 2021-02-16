@@ -4,6 +4,8 @@ namespace LocacaoVeiculosApi.Domain.Services.Communication
 {
     public class UsuarioResponse : BaseResponse
     {
+        private object entity;
+
         public UsuarioResponse(bool success, string message, Usuario usuario) : base(success, message)
         {
             Usuario = usuario;
@@ -15,5 +17,6 @@ namespace LocacaoVeiculosApi.Domain.Services.Communication
         { }
         public UsuarioResponse(string message) : this(false, message, null)
         { }
+
     }
 }
