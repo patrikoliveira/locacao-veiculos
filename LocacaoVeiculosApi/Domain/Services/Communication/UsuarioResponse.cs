@@ -9,6 +9,8 @@ namespace LocacaoVeiculosApi.Domain.Services.Communication
             Usuario = usuario;
         }
         public Usuario usuario {get;set;}
+        public Usuario Usuario { get; }
+
         public UsuarioResponse(Usuario usuario) : this(true, string.Empty, usuario)
         { }
         public UsuarioResponse(string message) : this(false, message, null)

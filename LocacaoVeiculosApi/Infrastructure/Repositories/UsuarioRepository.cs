@@ -28,6 +28,11 @@ namespace LocacaoVeiculosApi.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task FindByIdAsync(Usuario user)
+        {
+            _context.Usuarios.FirstOrDefaultAsync(user.Id);
+        }
+
         public async Task Update(Usuario user)
         {
             _context.Usuarios.Update(user);
