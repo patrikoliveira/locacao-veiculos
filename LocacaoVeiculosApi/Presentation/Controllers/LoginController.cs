@@ -1,26 +1,26 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
+using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Infra.Authentication;
-using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
-using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
-    [ApiController]    
-    public class LoginController : ControllerBase
+    [ApiController]
+    [Route("/api/[controller]")]
+    public class LoginController : Controller
     {
-        private readonly UsuarioService _usuarioService;
-        private readonly ILogger<LoginController> _logger;
+        private readonly IUsuarioService<Usuario> _usuarioService;
+        private readonly IMapper _mapper;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(IUsuarioService<Usuario> usuarioService, IMapper mapper)
         {
-            _logger = logger;
-            _usuarioService = new UsuarioService(new UsuarioRepository(), new EntityRepository());
+            _usuarioService = usuarioService;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -61,7 +61,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpPost]
         [Route("/operador/login")]
         [AllowAnonymous]
-        public async Task<ActionResult> OperadorLogin(OperatorLogin userLogin)
+        public async Task<ActionResult> OperadorLogin(OperadorLogin userLogin)
         {
             try
             {
