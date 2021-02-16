@@ -1,28 +1,28 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
-using LocacaoVeiculosApi.Infrastructure.Repositories;
+using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     [ApiController]
-    public class OperadorController
+    [Route("/api/[controller]")]
+    public class OperadorController : Controller
     {
-        private readonly UsuarioService _usuarioService;
-        private readonly ILogger<OperadorController> _logger;
+        private readonly IUsuarioService<Usuario> _usuarioService;
+        private readonly IMapper _mapper;
 
-        public OperadorController(ILogger<OperadorController> logger)
+        public OperadorController(IUsuarioService<Usuario> usuarioService, IMapper mapper)
         {
-            _logger = logger;
-            _usuarioService = new UsuarioService(new UsuarioRepository(), new EntityRepository());
+            _usuarioService = usuarioService;
+            _mapper = mapper;
         }
 
         [HttpGet]
