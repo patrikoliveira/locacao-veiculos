@@ -28,7 +28,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpGet]
-        [Route("/operador")]
+        // [Route("/operador")]
         [Authorize(Roles = "Cliente, Operador")]
         public async Task<IEnumerable<OperadorDto>> Index()
         {
@@ -37,9 +37,9 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        [Route("/operador/{id}")]
+        // [Route("/operador/{id}")]
         [Authorize(Roles = "Cliente, Operador")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _usuarioService.GetAsync(id);
 

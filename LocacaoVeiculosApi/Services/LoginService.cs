@@ -1,9 +1,4 @@
-// using System.Threading.Tasks;
-// using LocacaoVeiculosApi.Domain.Entities;
-// using LocacaoVeiculosApi.Presentation.ViewModel;
-// using LocacaoVeiculosApi.Domain.Authentication;
-// using System.Collections.Generic;
-// using LocacaoVeiculosApi.Domain.Services.Communication;
+using System.Linq;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Services.Communication;
@@ -13,7 +8,7 @@ using LocacaoVeiculosApi.Domain.Authentication;
 
 namespace LocacaoVeiculosApi.Services
 {
-    public class LoginService/*<Usuario> : IUsuarioService<Usuario> where Usuario : class*/
+    public class LoginService
     {
         private readonly EntityRepository<Usuario> _usuarioRepository;
         // private readonly IUnitOfWork _unitOfWork;
@@ -28,11 +23,12 @@ namespace LocacaoVeiculosApi.Services
         {
             var usuarios = await _usuarioRepository.Filter(x => x.CpfMatricula == usuarioLogin.CpfMatricula);
 
-            if (usuarios == null)
+            if (usuarios == null || usuarios.Count() == 0)
             {
                 return new EntityResponse("Usuário/Senha Inválido");
             }
 
+            var usuario = usuarios.First();
             if (usuario.Senha != usuarioLogin.Senha)
             {
                 return new EntityResponse("Usuário/Senha Inválido");
