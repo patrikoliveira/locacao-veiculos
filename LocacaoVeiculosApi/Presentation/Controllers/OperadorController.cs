@@ -2,10 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.Entities.Enums;
-using LocacaoVeiculosApi.Domain.Entities.Exceptions;
-using LocacaoVeiculosApi.Domain.Services;
-using LocacaoVeiculosApi.Domain.Services.Communication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +25,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpGet]
         // [Route("/operador")]
-        [Authorize(Roles = "Cliente, Operador")]
+        //[Authorize(Roles = "Cliente, Operador")]
+        //[AllowAnonymous]
         public async Task<IEnumerable<OperadorDto>> Index()
         {
             var operadores = await _usuarioService.ListAsync();
@@ -52,14 +49,15 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] OperadorSalvar resource)
+        //[AllowAnonymous]
+        public async Task<IActionResult> PostAsync([FromBody] CreateOperadorDto resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
         
-            var operador = _mapper.Map<OperadorSalvar, Usuario>(resource);
+            var operador = _mapper.Map<CreateOperadorDto, Operador>(resource);
             var result = await _usuarioService.CreateAsync(operador);
         
             if (!result.Success)

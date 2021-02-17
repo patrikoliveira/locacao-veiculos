@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.Entities.Enums;
-using LocacaoVeiculosApi.Domain.Entities.Exceptions;
-using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -29,16 +26,18 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpGet]
         // [Route("/cliente")]
-        [Authorize(Roles = "Cliente, Operador")]
+        //[Authorize(Roles = "Cliente, Operador")]
+        [AllowAnonymous]
         public async Task<IEnumerable<UsuarioCompleto>> Index()
         {
-            var operadores = await _usuarioService.ListAsync();
-            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioCompleto>>(operadores);
+            var clientes = await _usuarioService.ListAsync();
+            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioCompleto>>(clientes);
         }
 
         [HttpGet("{id}")]
         // [Route("/cliente/{id}")]
-        [Authorize(Roles = "Cliente, Operador")]
+        //[Authorize(Roles = "Cliente, Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _usuarioService.GetAsync(id);
@@ -54,15 +53,16 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpPost]
         [Route("/users")]
         [Route("/cliente")]
-        [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Create([FromBody] ClienteSalvar resource)
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Create([FromBody] CreateClienteDto resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
         
-            var cliente = _mapper.Map<ClienteSalvar, Usuario>(resource);
+            var cliente = _mapper.Map<CreateClienteDto, Cliente>(resource);
             var result = await _usuarioService.CreateAsync(cliente);
         
             if (!result.Success)
@@ -76,14 +76,14 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpPut]
         [Route("/cliente/{id}")]
         [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Update(int id, [FromBody] ClienteSalvar resource)
+        public async Task<IActionResult> Update(int id, [FromBody] CreateClienteDto resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
         
-            var cliente = _mapper.Map<ClienteSalvar, Usuario>(resource);
+            var cliente = _mapper.Map<CreateClienteDto, Cliente>(resource);
             var result = await _usuarioService.UpdateAsync(id, cliente);
             
             if (!result.Success)

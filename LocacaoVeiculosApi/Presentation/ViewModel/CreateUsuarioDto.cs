@@ -1,6 +1,6 @@
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
-    public record CreateUsuarioDto
+    public class CreateUsuarioDto
     {
         public string Nome { get; internal set; }
         public int Id { get; internal set; }

@@ -70,6 +70,37 @@ namespace LocacaoVeiculosApi.Migrations
                     b.ToTable("modelos");
                 });
 
+            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CpfMatricula")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)");
+
+                    b.Property<int?>("EnderecoId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TipoUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("users");
+                });
+
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Veiculo", b =>
                 {
                     b.Property<int>("Id")
