@@ -5,10 +5,12 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
 using LocacaoVeiculosApi.Domain.Services;
+using LocacaoVeiculosApi.Domain.Services.Communication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using LocacaoVeiculosApi.Extensions;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
@@ -16,10 +18,10 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     [Route("/api/[controller]")]
     public class OperadorController : Controller
     {
-        private readonly IUsuarioService<Usuario> _usuarioService;
+        private readonly EntityService<Usuario> _usuarioService;
         private readonly IMapper _mapper;
 
-        public OperadorController(IUsuarioService<Usuario> usuarioService, IMapper mapper)
+        public OperadorController(EntityService<Usuario> usuarioService, IMapper mapper)
         {
             _usuarioService = usuarioService;
             _mapper = mapper;
@@ -28,76 +30,76 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpGet]
         [Route("/operador")]
         [Authorize(Roles = "Cliente, Operador")]
-        public async Task<ICollection<Operador>> Index()
+        public async Task<IEnumerable<OperadorDto>> Index()
         {
-            return await _usuarioService.RetornaTodosUsuarioPorTipo<Operador>(TipoUsuario.Operador);
+            var operadores = await _usuarioService.ListAsync();
+            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<OperadorDto>>(operadores);
+        }
+
+        [HttpGet("{id}")]
+        [Route("/operador/{id}")]
+        [Authorize(Roles = "Cliente, Operador")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _usuarioService.GetAsync(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(_mapper.Map<Usuario, OperadorDto>((Usuario)result.Entity));
         }
 
         [HttpPost]
-        [Route("/operador")]
-        [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Create([FromBody] OperadorSalvar op)
+        public async Task<IActionResult> PostAsync([FromBody] OperadorSalvar resource)
         {
-            var oper = EntityBuilder.Call<Operador>(op);
-            try
+            if (!ModelState.IsValid)
             {
-                await _usuarioService.Save(oper);
-                return StatusCode(201);
+                return BadRequest(ModelState.GetErrorMessages());
             }
-            catch (UsuarioUnico err)
+        
+            var operador = _mapper.Map<OperadorSalvar, Usuario>(resource);
+            var result = await _usuarioService.CreateAsync(operador);
+        
+            if (!result.Success)
             {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
+                return BadRequest(result.Message);
             }
-        }
 
-        [HttpPut]
-        [Route("/operador/{id}")]
-        [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Update(int id, [FromBody] OperadorSalvar op)
-        {
-            var oper = EntityBuilder.Call<Operador>(op);
-            oper.Id = id;
-            try
-            {
-                await _usuarioService.Save(oper);
-                return StatusCode(204);
-            }
-            catch (UsuarioUnico err)
-            {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
-            }
+            return StatusCode(201);
         }
-
-        [HttpDelete]
-        [Route("/operador/{id}")]
-        [Authorize(Roles = "Operador")]
-        public async Task<IActionResult> Delete(int id)
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] OperadorSalvar resource)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                await _usuarioService.Delete(id);
-                return StatusCode(204);
+                return BadRequest(ModelState.GetErrorMessages());
             }
-            catch (UsuarioIdVazio err)
+        
+            var operador = _mapper.Map<OperadorSalvar, Usuario>(resource);
+            var result = await _usuarioService.UpdateAsync(id, operador);
+            
+            if (!result.Success)
             {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
+                return BadRequest(result.Message);
             }
-            catch (UsuarioNotFound err)
+
+            return StatusCode(204);
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _usuarioService.DeleteAsync(id);
+        
+            if (!result.Success)
             {
-                return StatusCode(404, new
-                {
-                    Message = err.Message
-                });
+                return BadRequest(result.Message);
             }
+        
+            return StatusCode(204);
         }
     }
 }

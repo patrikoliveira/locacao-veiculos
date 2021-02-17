@@ -11,7 +11,7 @@ namespace LocacaoVeiculosApi.Domain.Services
     public interface IUsuarioService<T> where T : class
     {
         Task<UsuarioJwt> Login(Usuario user, Token token);
-        Task<Usuario> RetornaTodosUsuarios();
+        // Task<UsuarioView> RetornaTodosUsuarios();
         Task Save(Usuario user);
         Task Delete(int id);
         Task Update(Usuario user);
@@ -20,5 +20,6 @@ namespace LocacaoVeiculosApi.Domain.Services
         Task<T> Login(OperadorLogin userLogin, Token token);
         Task<ICollection<Usuario>> ListAsync();
         Task<UsuarioResponse> DeleteAsync(int id);
+        
     }
 }

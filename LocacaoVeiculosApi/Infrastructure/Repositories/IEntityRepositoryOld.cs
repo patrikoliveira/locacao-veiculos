@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace LocacaoVeiculosApi.Infrastructure.Repositories
 {
-    public interface IEntityRepositoryOld
+    public interface IEntityRepository
     {
         Task<T> FindById<T>(int id);
         Task Update<T>(T entity);

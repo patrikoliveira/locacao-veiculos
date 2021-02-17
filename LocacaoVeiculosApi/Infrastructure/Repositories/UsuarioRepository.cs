@@ -15,46 +15,63 @@ namespace LocacaoVeiculosApi.Infrastructure.Repositories
         {
         }
 
-        public async Task<ICollection<T>> AllByType<T>(short tipoUsuario) => await _context.Usuarios.AllByType<T>(tipoUsuario);
+        // public async Task<ICollection<T>> AllByType<T>(short tipoUsuario) {
+        //     // return await _context.Set<T>().All();
+        //     return null;
+        // }
 
-        public async Task<Usuario> FindByLoginAndPassword(string login, string password)
-        {
-            return await _context.Usuarios.Where(u => u.CpfMatricula == login && u.Senha == password).FirstOrDefaultAsync();
-        }
+        // public async Task<IEnumerable<IEntity>> ListAsync()
+        // {
+        //     return await _context.Usuarios.ToListAsync();
+        // }
+        // Task AddAsync<Usuario>(Usuario entity) where Usuario : class;
+        // public async Task AddAsync<Usuario>(Usuario entity)
+        // {
+        //     await _context.Usuarios.AddAsync(usuario);
+        // }
+        // public async Task<Usuario> FindByIdAsync(int id)
+        // {
+        //     return await _context.Usuarios.FindAsync(id);
+        // }
+        // public Task Update<Usuario>(Usuario user)
+        // {
+        //     _context.Usuarios.Update(entity);
+        // }
+        // public void Remove(Usuario entity)
+        // {
+        //     _context.Usuarios.Remove(entity);
+        // }
 
-        public async Task Save(Usuario user)
-        {
-            _context.Usuarios.Add(user);
-            await _context.SaveChangesAsync();
-        }
+        // public async Task<IUsuario> FindByLoginAndPassword<T>(string login, string password)
+        // {
+        //     return await _context.Usuarios.Where(u => u.CpfMatricula == login && u.Senha == password).FirstOrDefaultAsync();
+        // }
 
-        public async Task FindByIdAsync(Usuario user)
-        {
-            _context.Usuarios.FirstOrDefaultAsync(user.Id);
-        }
+        // public async Task<ICollection<UsuarioView>> All()
+        // {
+        //     return await _context.Usuarios.Select(u => new UsuarioView
+        //     {
+        //         Id = u.Id,
+        //         CpfMatricula = u.CpfMatricula,
+        //         Nome = u.Nome,
+        //         TipoUsuario = u.TipoUsuario.ToString()
+        //     }).ToListAsync();
+        // }
 
-        public async Task Update(Usuario user)
-        {
-            _context.Usuarios.Update(user);
-            await _context.SaveChangesAsync();
-        }
+        // public async Task Save<Usuario>(Usuario user)
+        // {
+        //     return null;
+        // }
+        // public async Task CountByCpfMatricula<T>(string cpfMatricula, short tipo)
+        // {
+        //     return null;
+        // }
 
-        public async Task<ICollection<UsuarioView>> All()
-        {
-            return await _context.Usuarios.Select(u => new UsuarioView
-            {
-                Id = u.Id,
-                CpfMatricula = u.CpfMatricula,
-                Nome = u.Nome,
-                TipoUsuario = u.TipoUsuario.ToString()
-            }).ToListAsync();
-        }
-
-        public async Task Delete(Usuario user)
-        {
-            _context.Usuarios.Remove(user);
-            await _context.SaveChangesAsync();
-        }
+        // public async Task CountByIdAndCpfMatricula<T1>(int id, string cpfMatricula, string tipoUsuario)
+        // {
+        //     return null;
+        // }
+        
 
     }
 }

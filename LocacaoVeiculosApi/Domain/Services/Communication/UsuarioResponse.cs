@@ -4,17 +4,24 @@ namespace LocacaoVeiculosApi.Domain.Services.Communication
 {
     public class UsuarioResponse : BaseResponse
     {
-        private object entity;
-
         public UsuarioResponse(bool success, string message, Usuario usuario) : base(success, message)
         {
             Usuario = usuario;
         }
-        public Usuario usuario {get;set;}
-        public Usuario Usuario { get; }
+        public Usuario Usuario {get;set;}
 
+        /// <summary>
+        /// Creates a success response.
+        /// </summary>
+        /// <param name="usuario">Usuario criado.</param>
+        /// <returns>Response.</returns>
         public UsuarioResponse(Usuario usuario) : this(true, string.Empty, usuario)
         { }
+        /// <summary>
+        /// Creates am error response.
+        /// </summary>
+        /// <param name="message">Error message.</param>
+        /// <returns>Response.</returns>
         public UsuarioResponse(string message) : this(false, message, null)
         { }
 

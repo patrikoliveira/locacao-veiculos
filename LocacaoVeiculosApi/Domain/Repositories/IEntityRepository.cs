@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.Entities;
 
 namespace LocacaoVeiculosApi.Domain.Repositories
 {
@@ -11,6 +12,9 @@ namespace LocacaoVeiculosApi.Domain.Repositories
         Task<T> FindByIdAsync(int id);
         void Update(T entity);
         void Remove(T entity);
+
+        Task<IEnumerable<T>> Filter(Expression<Func<T, bool>> predicate,
+            params Expression<Func<T, object>>[] includes);
     }
 }
 

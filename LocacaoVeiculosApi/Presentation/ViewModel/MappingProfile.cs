@@ -10,6 +10,7 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<Categoria, CategoriaDto>();
             CreateMap<Marca, MarcaDto>();
             CreateMap<Modelo, ModeloDto>();
+            CreateMap<Usuario, OperadorDto>();
             
             CreateMap<CreateCategoriaDto, Categoria>();
             CreateMap<CreateMarcaDto, Marca>();
