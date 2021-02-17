@@ -39,7 +39,7 @@ namespace LocacaoVeiculosApi.Infrastructure.Repositories
             }
 
             return await query.ToListAsync();
-        } 
+        }
 
         public async Task AddAsync(T entity)
         {
