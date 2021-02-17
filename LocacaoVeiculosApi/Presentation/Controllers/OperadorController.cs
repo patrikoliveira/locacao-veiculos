@@ -58,6 +58,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             }
         
             var operador = _mapper.Map<CreateOperadorDto, Operador>(resource);
+            //return StatusCode(201, operador.CpfMatricula);
             var result = await _usuarioService.CreateAsync(operador);
         
             if (!result.Success)
@@ -76,7 +77,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             }
         
-            var operador = _mapper.Map<OperadorSalvar, Usuario>(resource);
+            var operador = _mapper.Map<OperadorSalvar, Operador>(resource);
             var result = await _usuarioService.UpdateAsync(id, operador);
             
             if (!result.Success)

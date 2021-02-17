@@ -35,7 +35,7 @@ namespace LocacaoVeiculosApi
         public void ConfigureServices(IServiceCollection services)
         {
             JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
-            //services.AddDbContext<EntityContext>(options => options.UseNpgsql(jAppSettings["ConnectionString"].ToString()));
+            //services.AddDbContext<EntityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
 
             var key = Encoding.ASCII.GetBytes(jAppSettings["JwtToken"].ToString());
 
@@ -111,7 +111,7 @@ namespace LocacaoVeiculosApi
             );
 
             app.UseAuthentication();
-            //dotapp.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
