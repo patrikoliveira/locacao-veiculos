@@ -66,7 +66,6 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 CpfMatricula = operador.Matricula,
                 TipoUsuario = TipoUsuario.Operador
             };
-            //return StatusCode(201, operador.CpfMatricula);
             var result = await _usuarioService.CreateAsync(usuario);
         
             if (!result.Success)
@@ -78,15 +77,22 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] OperadorSalvar resource)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] CreateOperadorDto resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
         
-            var operador = _mapper.Map<OperadorSalvar, Operador>(resource);
-            var result = await _usuarioService.UpdateAsync(id, operador);
+            var operador = _mapper.Map<CreateOperadorDto, Operador>(resource);
+            var usuario = new Usuario()
+            {
+                Nome = operador.Nome,
+                Senha = operador.Senha,
+                CpfMatricula = operador.Matricula,
+                TipoUsuario = TipoUsuario.Operador
+            };
+            var result = await _usuarioService.UpdateAsync(id, usuario);
             
             if (!result.Success)
             {
