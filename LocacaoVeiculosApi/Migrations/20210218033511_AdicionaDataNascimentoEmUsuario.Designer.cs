@@ -3,56 +3,23 @@ using System;
 using LocacaoVeiculosApi.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LocacaoVeiculosApi.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    partial class EntityContextModelSnapshot : ModelSnapshot
+    [Migration("20210218033511_AdicionaDataNascimentoEmUsuario")]
+    partial class AdicionaDataNascimentoEmUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("Endereco", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Cep")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Complemento")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("character varying(2)");
-
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("endereco");
-                });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Categoria", b =>
                 {
@@ -136,8 +103,6 @@ namespace LocacaoVeiculosApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
-
                     b.ToTable("users");
                 });
 
@@ -186,15 +151,6 @@ namespace LocacaoVeiculosApi.Migrations
                     b.HasIndex("ModeloId");
 
                     b.ToTable("veiculos");
-                });
-
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Usuario", b =>
-                {
-                    b.HasOne("Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId");
-
-                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Veiculo", b =>
