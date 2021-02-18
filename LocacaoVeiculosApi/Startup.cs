@@ -61,7 +61,7 @@ namespace LocacaoVeiculosApi
 
             services.AddScoped<AgendamentoService>();
             services.AddScoped<EntityRepository<Agendamento>>();
-            
+            services.AddScoped<EntityRepository<Checklist>>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

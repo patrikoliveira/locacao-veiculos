@@ -14,13 +14,15 @@ namespace LocacaoVeiculosApi.Services
     {
         private readonly EntityRepository<Veiculo> _veiculoRepository;
         private readonly EntityRepository<Agendamento> _agendamentoRepository;
+        private readonly EntityRepository<Checklist> _checklistRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AgendamentoService(EntityRepository<Veiculo> veiculoRepository, EntityRepository<Agendamento> agendamentoRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public AgendamentoService(EntityRepository<Veiculo> veiculoRepository, EntityRepository<Agendamento> agendamentoRepository, EntityRepository<Checklist> checklistRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _veiculoRepository = veiculoRepository;
             _agendamentoRepository = agendamentoRepository;
+            _checklistRepository = checklistRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -89,6 +91,68 @@ namespace LocacaoVeiculosApi.Services
             catch (Exception e)
             {
                 return new EntityResponse($"Um erro ocorreu ao salvar um agendamento: {e.Message}");
+            }
+        }
+
+        public async Task<EntityResponse> Devolver(DevolucaoInput resource)
+        {
+            var agendamento = await _agendamentoRepository.FindByIdAsync(resource.AgendamentoId);
+
+            if (agendamento == null)
+            {
+                return new EntityResponse("Agendamento não encontrado");
+            }
+            
+            //TODO: Validar operador quando disponível
+            // if (resource.OperadorId == 0)
+            // {
+            //     return new EntityResponse("Operador Obrigatório");
+            // }
+            
+            var checklist = _mapper.Map<DevolucaoInput, Checklist>(resource);
+            
+            agendamento.DataHoraEntregaRealizada = DateTime.Now;
+
+            double adicional = 0;
+
+            if (!resource.CarroLimpo)
+            {
+                adicional += agendamento.SubTotal * 0.30;
+            }
+            
+            if (!resource.TanqueCheio)
+            {
+                adicional += agendamento.SubTotal * 0.30;
+            }
+            
+            if (resource.Amassados)
+            {
+                adicional += agendamento.SubTotal * 0.30;
+            }
+            
+            if (resource.Arranhoes)
+            {
+                adicional += agendamento.SubTotal * 0.30;
+            }
+
+            agendamento.CustosAdicional = adicional;
+            agendamento.ValorTotal = agendamento.SubTotal + adicional;
+            agendamento.RealizadaVistoria = true;
+
+            try
+            {
+                await _checklistRepository.AddAsync(checklist);
+                await _unitOfWork.CompleteAsync();
+
+                agendamento.ChecklistId = checklist.Id;
+                _agendamentoRepository.Update(agendamento);
+                await _unitOfWork.CompleteAsync();
+                
+                return new EntityResponse(agendamento);
+            }
+            catch (Exception e)
+            {
+                return new EntityResponse($"Um erro ocorreu ao atualizar um agendamento: {e.Message}");
             }
         }
     }

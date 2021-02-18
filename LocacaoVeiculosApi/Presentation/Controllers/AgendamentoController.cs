@@ -44,5 +44,19 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             
             return StatusCode(201, result.Entity);
         }
+
+        [HttpPost]
+        [Route(("Devolver"))]
+        public async Task<IActionResult> Devolver([FromBody] DevolucaoInput input)
+        {
+            var result = await _agendamentoService.Devolver(input);
+            
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            
+            return StatusCode(201, result.Entity);
+        }
     }
 }
