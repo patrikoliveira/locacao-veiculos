@@ -3,15 +3,17 @@ using System;
 using LocacaoVeiculosApi.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LocacaoVeiculosApi.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    partial class EntityContextModelSnapshot : ModelSnapshot
+    [Migration("20210218034411_CriaEntidadeEndereco")]
+    partial class CriaEntidadeEndereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,63 +21,39 @@ namespace LocacaoVeiculosApi.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Agendamento", b =>
+            modelBuilder.Entity("Endereco", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("ChecklistId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Cep")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<double?>("CustosAdicional")
-                        .HasColumnType("double precision");
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("DataAgendamento")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("Complemento")
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("DataHoraColetaPrevista")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("character varying(2)");
 
-                    b.Property<DateTime?>("DataHoraColetaRealizada")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("DataHoraEntregaPrevista")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("DataHoraEntregaRealizada")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double>("HorasLocacao")
-                        .HasColumnType("double precision");
-
-                    b.Property<int?>("OperadorId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool?>("RealizadaVistoria")
-                        .HasColumnType("boolean");
-
-                    b.Property<double>("SubTotal")
-                        .HasColumnType("double precision");
-
-                    b.Property<int?>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("ValorHora")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("ValorTotal")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("VeiculoId")
+                    b.Property<int>("Numero")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChecklistId");
-
-                    b.ToTable("Agendamentos");
+                    b.ToTable("endereco");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Categoria", b =>
@@ -83,41 +61,16 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias");
-                });
-
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Checklist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("Amassados")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("Arranhoes")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("CarroLimpo")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("TanqueCheio")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("TanqueLitroPendente")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Checklists");
+                    b.ToTable("categorias");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Marca", b =>
@@ -125,14 +78,16 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Marcas");
+                    b.ToTable("marcas");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Modelo", b =>
@@ -140,14 +95,52 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Modelos");
+                    b.ToTable("modelos");
+                });
+
+            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CpfMatricula")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)");
+
+                    b.Property<string>("DataNascimento")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("EnderecoId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TipoUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnderecoId");
+
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Veiculo", b =>
@@ -155,31 +148,36 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("CapacidadePortaMalas")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("capacidade_porta_malas");
 
                     b.Property<int>("CapacidadeTanque")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("capacidade_tanque");
 
-                    b.Property<int>("CategoriaId")
+                    b.Property<int?>("CategoriaId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Combustivel")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MarcaId")
+                    b.Property<int?>("MarcaId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ModeloId")
+                    b.Property<int?>("ModeloId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Placa")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("placa");
 
                     b.Property<float>("ValorHora")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("valor_hora");
 
                     b.HasKey("Id");
 
@@ -189,37 +187,31 @@ namespace LocacaoVeiculosApi.Migrations
 
                     b.HasIndex("ModeloId");
 
-                    b.ToTable("Veiculos");
+                    b.ToTable("veiculos");
                 });
 
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Agendamento", b =>
+            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Usuario", b =>
                 {
-                    b.HasOne("LocacaoVeiculosApi.Domain.Entities.Checklist", "Checklist")
+                    b.HasOne("Endereco", "Endereco")
                         .WithMany()
-                        .HasForeignKey("ChecklistId");
+                        .HasForeignKey("EnderecoId");
 
-                    b.Navigation("Checklist");
+                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Veiculo", b =>
                 {
                     b.HasOne("LocacaoVeiculosApi.Domain.Entities.Categoria", "Categoria")
                         .WithMany("Veiculos")
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoriaId");
 
                     b.HasOne("LocacaoVeiculosApi.Domain.Entities.Marca", "Marca")
                         .WithMany("Veiculos")
-                        .HasForeignKey("MarcaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MarcaId");
 
                     b.HasOne("LocacaoVeiculosApi.Domain.Entities.Modelo", "Modelo")
-                        .WithMany("Veiculos")
-                        .HasForeignKey("ModeloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ModeloId");
 
                     b.Navigation("Categoria");
 
@@ -234,11 +226,6 @@ namespace LocacaoVeiculosApi.Migrations
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Marca", b =>
-                {
-                    b.Navigation("Veiculos");
-                });
-
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Modelo", b =>
                 {
                     b.Navigation("Veiculos");
                 });

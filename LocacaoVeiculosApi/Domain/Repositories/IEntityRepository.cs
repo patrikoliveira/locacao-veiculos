@@ -15,6 +15,9 @@ namespace LocacaoVeiculosApi.Domain.Repositories
             params Expression<Func<T, object>>[] includes);
         void Update(T entity);
         void Remove(T entity);
+
+        Task<IEnumerable<T>> Filter(Expression<Func<T, bool>> predicate,
+            params Expression<Func<T, object>>[] includes);
     }
 }
 

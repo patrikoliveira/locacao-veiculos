@@ -2,30 +2,28 @@ using LocacaoVeiculosApi.Domain.Entities;
 
 namespace LocacaoVeiculosApi.Domain.Services.Communication
 {
-    public class EntityResponse : BaseResponse
+    public class UsuarioResponse : BaseResponse
     {
-        private EntityResponse(bool success, string message, IEntity entity) : base(success, message)
+        public UsuarioResponse(bool success, string message, Usuario usuario) : base(success, message)
         {
-            Entity = entity;
+            Usuario = usuario;
         }
+        public Usuario Usuario {get;set;}
 
-        public IEntity Entity { get; set; }
-        
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="entity">Created Entity.</param>
+        /// <param name="usuario">Usuario criado.</param>
         /// <returns>Response.</returns>
-        public EntityResponse(IEntity entity) : this(true, string.Empty, entity)
+        public UsuarioResponse(Usuario usuario) : this(true, string.Empty, usuario)
         { }
-
         /// <summary>
         /// Creates am error response.
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public EntityResponse(string message) : this(false, message, null)
+        public UsuarioResponse(string message) : this(false, message, null)
         { }
-        
+
     }
 }
