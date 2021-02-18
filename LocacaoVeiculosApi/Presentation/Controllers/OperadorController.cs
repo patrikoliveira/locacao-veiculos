@@ -77,6 +77,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutAsync(int id, [FromBody] CreateOperadorDto resource)
         {
             if (!ModelState.IsValid)

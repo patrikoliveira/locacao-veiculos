@@ -102,6 +102,23 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             }
         
             var cliente = _mapper.Map<CreateClienteDto, Cliente>(resource);
+             var usuario = new Usuario()
+            {
+                Nome = cliente.Nome,
+                Senha = cliente.Senha,
+                CpfMatricula = cliente.Cpf,
+                DataNascimento = cliente.DataNascimento,
+                TipoUsuario = TipoUsuario.Cliente,
+                Endereco = new Endereco()
+                {
+                    Cep = resource.Cep,
+                    Cidade = resource.Cidade,
+                    Complemento = resource.Complemento,
+                    Estado = resource.Estado,
+                    Logradouro = resource.Logradouro,
+                    Numero = resource.Numero,
+                }
+            };
             var result = await _usuarioService.UpdateAsync(id, cliente);
             
             if (!result.Success)
