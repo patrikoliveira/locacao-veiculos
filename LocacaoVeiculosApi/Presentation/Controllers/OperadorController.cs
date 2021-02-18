@@ -30,8 +30,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [AllowAnonymous]
         public async Task<IEnumerable<OperadorDto>> Index()
         {
-            var operadores = await _usuarioService.ListAsync();
-            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<OperadorDto>>(operadores);
+            var result = await _usuarioService.ListAsync(x=> x.TipoUsuario == TipoUsuario.Operador);
+            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<OperadorDto>>(result);
         }
 
         [HttpGet("{id}")]
