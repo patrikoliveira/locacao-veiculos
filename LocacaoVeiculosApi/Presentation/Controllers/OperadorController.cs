@@ -40,7 +40,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await _usuarioService.GetAsync(id);
+            var result = await _usuarioService.GetAsync(x=> x.Id == id);
 
             if (!result.Success)
             {

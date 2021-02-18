@@ -55,16 +55,5 @@ namespace LocacaoVeiculosApi.Infrastructure.Repositories
         {
             _context.Set<T>().Remove(entity);
         }
-
-        public async Task<IEnumerable<T>> Filter(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)       
-        {       
-            var query = _context.Set<T>().Where(predicate);       
-            foreach (Expression<Func<T, object>> i in includes)       
-            {       
-                query = query.Include(i);       
-            }
-
-            return await query.ToListAsync();
-        }
     }
 }

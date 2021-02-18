@@ -15,7 +15,7 @@ namespace LocacaoVeiculosApi.Domain.Services
         Task Save(Usuario user);
         Task Delete(int id);
         Task Update(Usuario user);
-        Task<ICollection<T>> RetornaTodosUsuarioPorTipo<T>(TipoUsuario cliente);
+        Task<ICollection<T>> RetornaTodosUsuarioPorTipo(TipoUsuario cliente);
         Task<T> Login(ClienteLogin userLogin, Token token);
         Task<T> Login(OperadorLogin userLogin, Token token);
         Task<ICollection<Usuario>> ListAsync();
