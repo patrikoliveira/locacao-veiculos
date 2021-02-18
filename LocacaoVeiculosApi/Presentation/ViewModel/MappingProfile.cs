@@ -16,6 +16,7 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<CreateMarcaDto, Marca>();
             CreateMap<CreateModeloDto, Modelo>();
             CreateMap<CreateVeiculoDto, Veiculo>();
+            CreateMap<DevolucaoInput, Checklist>();
 
             CreateMap<ModeloDto, Modelo>();
             CreateMap<MarcaDto, Marca>();
