@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LocacaoVeiculosApi.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20210217152023_locacao_veiculos")]
-    partial class locacao_veiculos
+    [Migration("20210217190204_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,7 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<int?>("ChecklistId")
                         .HasColumnType("integer");
 
-                    b.Property<double?>("CustosAdicional")
+                    b.Property<double>("CustosAdicional")
                         .HasColumnType("double precision");
 
                     b.Property<DateTime>("DataAgendamento")
@@ -40,34 +40,34 @@ namespace LocacaoVeiculosApi.Migrations
                     b.Property<DateTime>("DataHoraColetaPrevista")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("DataHoraColetaRealizada")
+                    b.Property<DateTime>("DataHoraColetaRealizada")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DataHoraEntregaPrevista")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("DataHoraEntregaRealizada")
+                    b.Property<DateTime>("DataHoraEntregaRealizada")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<double>("HorasLocacao")
                         .HasColumnType("double precision");
 
-                    b.Property<int?>("OperadorId")
+                    b.Property<int>("OperadorId")
                         .HasColumnType("integer");
 
-                    b.Property<bool?>("RealizadaVistoria")
+                    b.Property<bool>("RealizadaVistoria")
                         .HasColumnType("boolean");
 
                     b.Property<double>("SubTotal")
                         .HasColumnType("double precision");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
                     b.Property<double>("ValorHora")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("ValorTotal")
+                    b.Property<double>("ValorTotal")
                         .HasColumnType("double precision");
 
                     b.Property<int>("VeiculoId")
@@ -150,37 +150,6 @@ namespace LocacaoVeiculosApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Modelos");
-                });
-
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("CpfMatricula")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)");
-
-                    b.Property<int?>("EnderecoId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("TipoUsuario")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Veiculo", b =>

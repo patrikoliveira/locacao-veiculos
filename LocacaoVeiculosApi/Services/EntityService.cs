@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Repositories;
 using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Domain.Services.Communication;
-using LocacaoVeiculosApi.Extensions;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
-using Neo4jClient.DataAnnotations.Cypher.Functions;
 
 namespace LocacaoVeiculosApi.Services
 {
@@ -23,21 +23,21 @@ namespace LocacaoVeiculosApi.Services
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<IEnumerable<T>> ListAsync()
+        public async Task<IEnumerable<T>> ListAsync(params Expression<Func<T, object>>[] includes)
         {
-            return await _entityRepository.ListAsync();
+            return await _entityRepository.ListAsync(includes);
         }
 
-        public async Task<EntityResponse> GetAsync(int id)
+        public async Task<EntityResponse> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
-            var entityExistente = await _entityRepository.FindByIdAsync(id);
+            var entityExistente = await _entityRepository.Filter(predicate, includes);
             
-            if (entityExistente == null)
+            if (entityExistente == null || entityExistente.Count() == 0)
             {
-                return new EntityResponse("Categoria não encontrada.");
+                return new EntityResponse("Entidade não encontrada.");
             }
             
-            return new EntityResponse((IEntity) entityExistente);
+            return new EntityResponse((IEntity) entityExistente.First());
         }
 
         public async Task<EntityResponse> CreateAsync(T entity)

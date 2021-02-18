@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LocacaoVeiculosApi.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20210217152023_locacao_veiculos")]
-    partial class locacao_veiculos
+    [Migration("20210217203752_CamposNuloParaAgendamento")]
+    partial class CamposNuloParaAgendamento
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,37 +150,6 @@ namespace LocacaoVeiculosApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Modelos");
-                });
-
-            modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("CpfMatricula")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)");
-
-                    b.Property<int?>("EnderecoId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("TipoUsuario")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("LocacaoVeiculosApi.Domain.Entities.Veiculo", b =>

@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using LocacaoVeiculosApi.Extensions;
+using LocacaoVeiculosApi.Services;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
@@ -14,10 +13,10 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     [Route("/api/[controller]")]
     public class CategoriasController: Controller
     {
-        private readonly ICategoriaService<Categoria> _categoriaService;
+        private readonly EntityService<Categoria> _categoriaService;
         private readonly IMapper _mapper;
 
-        public CategoriasController(ICategoriaService<Categoria> categoriaService, IMapper mapper)
+        public CategoriasController(EntityService<Categoria> categoriaService, IMapper mapper)
         {
             _categoriaService = categoriaService;
             _mapper = mapper;
@@ -33,13 +32,13 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await _categoriaService.GetAsync(id);
+            var result = await _categoriaService.GetAsync(x=> x.Id == id);
             if (!result.Success)
             {
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Categoria, CategoriaDto>(result.Categoria));
+            return Ok(_mapper.Map<Categoria, CategoriaDto>((Categoria) result.Entity));
 
         }
         
@@ -59,7 +58,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Categoria, CategoriaDto>(result.Categoria));
+            return StatusCode(201);
         }
         
         [HttpPut("{id}")]
@@ -78,7 +77,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Categoria, CategoriaDto>(result.Categoria));
+            return StatusCode(204);
         }
         
         [HttpDelete("{id}")]
@@ -91,7 +90,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Categoria, CategoriaDto>(result.Categoria));
+            return StatusCode(204);
         }
         
     }

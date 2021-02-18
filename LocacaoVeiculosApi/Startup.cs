@@ -66,12 +66,9 @@ namespace LocacaoVeiculosApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LocacaoVeiculosApi", Version = "v1" });
             });
-            
-            services.AddScoped<IVeiculoRepository<Veiculo>, VeiculoRepository<Veiculo>>();
-            services.AddScoped<IVeiculoService<Veiculo>, VeiculoService<Veiculo>>();
-            
-            services.AddScoped<ICategoriaRepository<Categoria>, CategoriaRepository<Categoria>>();
-            services.AddScoped<ICategoriaService<Categoria>, CategoriaService<Categoria>>();
+
+            services.AddScoped<EntityRepository<Categoria>>();
+            services.AddScoped<EntityService<Categoria>>();
 
             services.AddScoped<EntityRepository<Marca>>();
             services.AddScoped<EntityService<Marca>>();
@@ -82,6 +79,13 @@ namespace LocacaoVeiculosApi
             services.AddScoped<EntityRepository<Usuario>>();
             services.AddScoped<EntityService<Usuario>>();
             
+            services.AddScoped<EntityRepository<Veiculo>>();
+            services.AddScoped<EntityService<Veiculo>>();
+
+            services.AddScoped<AgendamentoService>();
+            services.AddScoped<EntityRepository<Agendamento>>();
+            services.AddScoped<EntityRepository<Checklist>>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));

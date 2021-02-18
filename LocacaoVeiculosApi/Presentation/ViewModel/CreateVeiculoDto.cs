@@ -1,22 +1,33 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using LocacaoVeiculosApi.Domain.Entities;
 
-namespace LocacaoVeiculosApi.Domain.Entities
+namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
-    public class Veiculo : IEntity
+    public class CreateVeiculoDto
     {
-        [Key]
-        public int Id { get; set; }
+        [Required]
+        [StringLength(7)]
         public string Placa { get; set; }
+        
+        [Required]
         public int ModeloId { get; set; }
-        public virtual Modelo Modelo { get; set; }
+        
+        [Required]
         public int MarcaId { get; set; }
-        public virtual Marca Marca { get; set; }
+        
+        [Required]
         public int CategoriaId { get; set; }
-        public virtual Categoria Categoria { get; set; }
+        
+        [Required]
         public Combustivel Combustivel { get; set; }
+        
+        [Required]
         public float ValorHora { get; set; }
+        
+        [Required]
         public int CapacidadePortaMalas { get; set; }
+        
+        [Required]
         public int CapacidadeTanque { get; set; }
     }
 }

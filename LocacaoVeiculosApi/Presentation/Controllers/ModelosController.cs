@@ -32,7 +32,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await _modeloService.GetAsync(id);
+            var result = await _modeloService.GetAsync(x=> x.Id == id);
             if (!result.Success)
             {
                 return BadRequest(result.Message);
@@ -57,7 +57,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Modelo, ModeloDto>((Modelo) result.Entity));
+            return StatusCode(201);
         }
         
         [HttpPut("{id}")]
@@ -76,7 +76,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Modelo, ModeloDto>((Modelo) result.Entity));
+            return StatusCode(204);
         }
         
         [HttpDelete("{id}")]
@@ -89,7 +89,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Modelo, ModeloDto>((Modelo) result.Entity));
+            return StatusCode(204);
         }
     }
 }

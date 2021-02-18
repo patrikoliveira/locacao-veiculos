@@ -15,14 +15,30 @@ namespace LocacaoVeiculosApi.Infrastructure.Repositories
         {
         }
 
-        public async Task<IEnumerable<T>> ListAsync()
+        public async Task<IEnumerable<T>> ListAsync(params Expression<Func<T, object>>[] includes)
         {
-            return await _context.Set<T>().ToListAsync();
+            var query = _context.Set<T>().AsQueryable();       
+            foreach (Expression<Func<T, object>> i in includes)       
+            {       
+                query = query.Include(i);       
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<T> FindByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<IEnumerable<T>> Filter(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)       
+        {       
+            var query = _context.Set<T>().Where(predicate);       
+            foreach (Expression<Func<T, object>> i in includes)       
+            {       
+                query = query.Include(i);       
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task AddAsync(T entity)
