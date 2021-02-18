@@ -8,6 +8,12 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
     {
         [Required]
         public int VeiculoId { get; set; }
+        
+        [Required]
+        public int UsuarioId { get; set; }
+        
+        [Required]
+        public int OperadorId { get; set; }
 
         [Required]
         public string DataRetirada { get; set; }
