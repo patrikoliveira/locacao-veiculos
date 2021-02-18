@@ -25,10 +25,13 @@ namespace LocacaoVeiculosApi.Domain.Entities
         public virtual string Nome { get; set; }
 		[Column]
         public virtual int? EnderecoId { get; set; }
+        public virtual Endereco Endereco { get; set; }
         [Required]
         public virtual TipoUsuario TipoUsuario { get; set; }
+        [Column]
+        public virtual string DataNascimento { get; set; }
 
-        public virtual TipoUsuario Tipo { get { return (TipoUsuario)Enum.ToObject(typeof(TipoUsuario), this.Tipo); } }
+        public virtual TipoUsuario Tipo { get { return (TipoUsuario)Enum.ToObject(typeof(TipoUsuario), this.TipoUsuario); } }
         
     }
 }

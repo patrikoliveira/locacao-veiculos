@@ -16,11 +16,9 @@ namespace LocacaoVeiculosApi.Domain.Entities
         [JsonIgnore]
         public override TipoUsuario TipoUsuario { get; set; }
         [Column]
-        public string DataNascimento { get; set; }
-        [Column]
         [JsonIgnore]
         public override int? EnderecoId { get; set; }
-        public Endereco Endereco { get; set; }
+        public override Endereco Endereco { get; set; }
 
         [Required]
         public string Cpf

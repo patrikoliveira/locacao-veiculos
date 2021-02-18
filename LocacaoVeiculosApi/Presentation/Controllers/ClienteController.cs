@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -63,7 +64,24 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             }
         
             var cliente = _mapper.Map<CreateClienteDto, Cliente>(resource);
-            var result = await _usuarioService.CreateAsync(cliente);
+            var usuario = new Usuario()
+            {
+                Nome = cliente.Nome,
+                Senha = cliente.Senha,
+                CpfMatricula = cliente.Cpf,
+                DataNascimento = cliente.DataNascimento,
+                TipoUsuario = TipoUsuario.Cliente,
+                Endereco = new Endereco()
+                {
+                    Cep = resource.Cep,
+                    Cidade = resource.Cidade,
+                    Complemento = resource.Complemento,
+                    Estado = resource.Estado,
+                    Logradouro = resource.Logradouro,
+                    Numero = resource.Numero,
+                }
+            };
+            var result = await _usuarioService.CreateAsync(usuario);
         
             if (!result.Success)
             {

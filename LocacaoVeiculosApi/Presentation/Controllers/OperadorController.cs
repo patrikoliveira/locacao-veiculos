@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -49,7 +50,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] CreateOperadorDto resource)
         {
             if (!ModelState.IsValid)
@@ -58,8 +59,15 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             }
         
             var operador = _mapper.Map<CreateOperadorDto, Operador>(resource);
+            var usuario = new Usuario()
+            {
+                Nome = operador.Nome,
+                Senha = operador.Senha,
+                CpfMatricula = operador.Matricula,
+                TipoUsuario = TipoUsuario.Operador
+            };
             //return StatusCode(201, operador.CpfMatricula);
-            var result = await _usuarioService.CreateAsync(operador);
+            var result = await _usuarioService.CreateAsync(usuario);
         
             if (!result.Success)
             {

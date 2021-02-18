@@ -19,6 +19,7 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<CreateUsuarioDto, Usuario>();
             CreateMap<CreateClienteDto, Cliente>();
             CreateMap<CreateOperadorDto, Operador>();
+            CreateMap<CreateOperadorDto, Usuario>();
         }
         
     }
