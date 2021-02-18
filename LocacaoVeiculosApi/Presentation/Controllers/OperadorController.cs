@@ -27,7 +27,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpGet]
         // [Route("/operador")]
         //[Authorize(Roles = "Cliente, Operador")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IEnumerable<OperadorDto>> Index()
         {
             var operadores = await _usuarioService.ListAsync();
@@ -36,7 +36,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpGet("{id}")]
         // [Route("/operador/{id}")]
-        [Authorize(Roles = "Cliente, Operador")]
+        //[Authorize(Roles = "Cliente, Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _usuarioService.GetAsync(id);
@@ -104,6 +105,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _usuarioService.DeleteAsync(id);

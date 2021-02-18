@@ -29,10 +29,10 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         // [Route("/cliente")]
         //[Authorize(Roles = "Cliente, Operador")]
         [AllowAnonymous]
-        public async Task<IEnumerable<UsuarioCompleto>> Index()
+        public async Task<IEnumerable<ClienteDto>> Index()
         {
             var clientes = await _usuarioService.ListAsync();
-            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioCompleto>>(clientes);
+            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<ClienteDto>>(clientes);
         }
 
         [HttpGet("{id}")]
@@ -52,7 +52,6 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpPost]
-        [Route("/users")]
         [Route("/cliente")]
         //[Authorize(Roles = "Operador")]
         [AllowAnonymous]
@@ -93,7 +92,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpPut]
         [Route("/cliente/{id}")]
-        [Authorize(Roles = "Operador")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update(int id, [FromBody] CreateClienteDto resource)
         {
             if (!ModelState.IsValid)
@@ -131,7 +131,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpDelete]
         [Route("/cliente/{id}")]
-        [Authorize(Roles = "Operador")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _usuarioService.DeleteAsync(id);
