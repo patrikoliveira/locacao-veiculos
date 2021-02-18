@@ -48,7 +48,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 return BadRequest(result.Message);
             }
 
-            return Ok(_mapper.Map<Usuario, UsuarioCompleto>((Usuario)result.Entity));
+            return Ok(_mapper.Map<Usuario, ClienteDto>((Usuario)result.Entity));
         }
 
         [HttpPost]
