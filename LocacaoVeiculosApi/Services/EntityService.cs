@@ -28,6 +28,12 @@ namespace LocacaoVeiculosApi.Services
             return await _entityRepository.ListAsync(includes);
         }
 
+        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            return await _entityRepository.Filter(predicate, includes);
+        }
+        
+
         public async Task<EntityResponse> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
         {
             var entityExistente = await _entityRepository.Filter(predicate, includes);

@@ -10,9 +10,12 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<Categoria, CategoriaDto>();
             CreateMap<Marca, MarcaDto>();
             CreateMap<Modelo, ModeloDto>();
-            CreateMap<Usuario, OperadorDto>();
-            CreateMap<Usuario, ClienteDto>();
+            CreateMap<Usuario, OperadorDto>()
+                .ForMember(u => u.Matricula, opt => opt.MapFrom(m => m.CpfMatricula));
+            CreateMap<Usuario, ClienteDto>()
+                .ForMember(u => u.Cpf, opt => opt.MapFrom(m => m.CpfMatricula));
             CreateMap<Veiculo, VeiculoDto>();
+            CreateMap<Endereco, EnderecoDto>();
 
             CreateMap<CreateCategoriaDto, Categoria>();
             CreateMap<CreateMarcaDto, Marca>();
