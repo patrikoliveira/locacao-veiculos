@@ -22,7 +22,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
         public int? UsuarioId { get; set; }
         public int? OperadorId { get; set; }
         public int VeiculoId { get; set; }
-        
+        public Veiculo Veiculo { get; set; }
         public int? ChecklistId { get; set; }
         public virtual Checklist Checklist { get; set; }
     }

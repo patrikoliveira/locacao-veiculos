@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +19,7 @@ namespace LocacaoVeiculosApi.Domain.Entities
         public float ValorHora { get; set; }
         public int CapacidadePortaMalas { get; set; }
         public int CapacidadeTanque { get; set; }
+        
+        public IList<Agendamento> Agendamentos { get; set; } = new List<Agendamento>();
     }
 }

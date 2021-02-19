@@ -15,11 +15,14 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     public class VeiculosController : Controller
     {
         private readonly EntityService<Veiculo> _veiculoService;
+        private readonly VeiculoService _vService;
+        private readonly EntityService<Veiculo> _veiculoEspecializadoRepository;
         private readonly IMapper _mapper;
 
-        public VeiculosController(EntityService<Veiculo> veiculoService, IMapper mapper)
+        public VeiculosController(EntityService<Veiculo> veiculoService, VeiculoService vService, IMapper mapper)
         {
             _veiculoService = veiculoService;
+            _vService = vService;
             _mapper = mapper;
         }
 
@@ -91,6 +94,15 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             }
         
             return StatusCode(204);
+        }
+        
+        [HttpGet]
+        [Route(("Disponiveis"))]
+        public async Task<IEnumerable<VeiculoOutputRepository>> GetAllDisponivelAsync()
+        {
+            var veiculos = await _vService.GetVeiculosDisponiveisAsync();
+            return _mapper.Map<IEnumerable<VeiculoOutputRepository>, IEnumerable<VeiculoOutputRepository>>(veiculos);
+
         }
     }
 }
