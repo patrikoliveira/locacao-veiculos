@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
-using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +13,10 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     [Route("/api/[controller]")]
     public class LoginController : Controller
     {
-        private readonly ILoginService<UsuarioLogin> _usuarioService;
+        private readonly LoginService _usuarioService;
         private readonly IMapper _mapper;
 
-        public LoginController(ILoginService<UsuarioLogin> usuarioService, IMapper mapper)
+        public LoginController(LoginService usuarioService, IMapper mapper)
         {
             _usuarioService = usuarioService;
             _mapper = mapper;
