@@ -4,7 +4,6 @@ using System.Text;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Repositories;
-using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Infrastructure.Database;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
@@ -87,6 +86,9 @@ namespace LocacaoVeiculosApi
             services.AddScoped<EntityRepository<Agendamento>>();
             services.AddScoped<EntityRepository<Checklist>>();
 
+            services.AddScoped<VeiculoService>();
+            services.AddScoped<VeiculoRepository>();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));

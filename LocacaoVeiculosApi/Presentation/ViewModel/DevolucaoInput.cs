@@ -25,7 +25,7 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
         [Required]
         public int AgendamentoId { get; set; }
         
-        // [Required]
-        // public int OperadorId { get; set; }
+        [Required]
+        public int OperadorId { get; set; }
     }
 }

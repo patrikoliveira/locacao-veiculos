@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Infrastructure.PdfService;
+using AutoMapper;
+using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +14,12 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     public class AgendamentoController : Controller
     {
         private readonly AgendamentoService _agendamentoService;
-
-        public AgendamentoController(AgendamentoService agendamentoService)
+        private readonly IMapper _mapper;
+        
+        public AgendamentoController(AgendamentoService agendamentoService, IMapper mapper)
         {
             _agendamentoService = agendamentoService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -60,6 +65,14 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             }
             
             return StatusCode(201, result.Entity);
+        }
+        
+        [HttpGet]
+        [Route(("Locacoes/Clientes/{cpf}"))]
+        public async Task<IEnumerable<AgendamentoDto>> Consultar(string cpf)
+        {
+            var agendamentos = await _agendamentoService.ConsultarPorCpf(cpf);
+            return _mapper.Map<IEnumerable<Agendamento>, IEnumerable<AgendamentoDto>>(agendamentos);
         }
     }
 }

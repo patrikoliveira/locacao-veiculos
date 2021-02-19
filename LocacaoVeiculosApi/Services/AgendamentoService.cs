@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -16,14 +17,16 @@ namespace LocacaoVeiculosApi.Services
         private readonly EntityRepository<Veiculo> _veiculoRepository;
         private readonly EntityRepository<Agendamento> _agendamentoRepository;
         private readonly EntityRepository<Checklist> _checklistRepository;
+        private readonly EntityRepository<Usuario> _usuarioRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AgendamentoService(EntityRepository<Veiculo> veiculoRepository, EntityRepository<Agendamento> agendamentoRepository, EntityRepository<Checklist> checklistRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public AgendamentoService(EntityRepository<Veiculo> veiculoRepository, EntityRepository<Agendamento> agendamentoRepository, EntityRepository<Checklist> checklistRepository, EntityRepository<Usuario> usuarioRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _veiculoRepository = veiculoRepository;
             _agendamentoRepository = agendamentoRepository;
             _checklistRepository = checklistRepository;
+            _usuarioRepository = usuarioRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -56,6 +59,16 @@ namespace LocacaoVeiculosApi.Services
 
         public async Task<EntityResponse> Alugar(CalcularLocacaoInput input, IGeraPdf pdfWriter, string pathPDF)
         {
+            if (input.UsuarioId == 0)
+            {
+                return new EntityResponse("Usuário não identificado");
+            }
+            
+            if (input.OperadorId == 0)
+            {
+                return new EntityResponse("Operador não identificado");
+            }
+            
             var agendamentos = await _agendamentoRepository.Filter(ag => ag.VeiculoId == input.VeiculoId && ag.DataHoraEntregaRealizada == null);
 
             if (agendamentos.Count() > 0)
@@ -80,6 +93,8 @@ namespace LocacaoVeiculosApi.Services
                 HorasLocacao = simulado.TotalHoras,
                 SubTotal = simulado.Total,
                 VeiculoId = simulado.Veiculo.Id,
+                UsuarioId = input.UsuarioId,
+                OperadorId = input.OperadorId
             };
             
             try
@@ -106,11 +121,10 @@ namespace LocacaoVeiculosApi.Services
                 return new EntityResponse("Agendamento não encontrado");
             }
             
-            //TODO: Validar operador quando disponível
-            // if (resource.OperadorId == 0)
-            // {
-            //     return new EntityResponse("Operador Obrigatório");
-            // }
+            if (resource.OperadorId == 0)
+            {
+                return new EntityResponse("Operador Obrigatório");
+            }
             
             var checklist = _mapper.Map<DevolucaoInput, Checklist>(resource);
             
@@ -159,6 +173,19 @@ namespace LocacaoVeiculosApi.Services
             {
                 return new EntityResponse($"Um erro ocorreu ao atualizar um agendamento: {e.Message}");
             }
+        }
+        
+        public async Task<IEnumerable<Agendamento>> ConsultarPorCpf(string cpf)
+        {
+            var usuarios = await _usuarioRepository.Filter(usr => usr.CpfMatricula == cpf);
+
+            if (usuarios == null || usuarios.Count() == 0)
+            {
+                return new List<Agendamento>();
+            }
+
+            var user = usuarios.First();
+            return await _agendamentoRepository.Filter(ag => ag.UsuarioId == user.Id);
         }
     }
 }
