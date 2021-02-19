@@ -48,9 +48,11 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
             {
                 return BadRequest(result.Message);
             }
-            
-            return StatusCode(201, result.Entity);
+            var agendamentoDto = _mapper.Map<Agendamento, AgendamentoDto>((Agendamento)result.Entity);
+            return StatusCode(200, agendamentoDto);
+            // return Ok(result.Entity);
         }
+        
 
         [HttpPost]
         [Route(("Devolver"))]
