@@ -13,10 +13,10 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     [Route("/api/[controller]")]
     public class LoginController : Controller
     {
-        private readonly IUsuarioService<UsuarioLogin> _usuarioService;
+        private readonly ILoginService<UsuarioLogin> _usuarioService;
         private readonly IMapper _mapper;
 
-        public LoginController(IUsuarioService<UsuarioLogin> usuarioService, IMapper mapper)
+        public LoginController(ILoginService<UsuarioLogin> usuarioService, IMapper mapper)
         {
             _usuarioService = usuarioService;
             _mapper = mapper;

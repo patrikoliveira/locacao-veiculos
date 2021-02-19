@@ -6,6 +6,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
@@ -24,6 +25,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpGet]
         [Route("Simular")]
+        //[Authorize(Roles = "Cliente, Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> Simular([FromQuery] CalcularLocacaoInput calcularLocacaoInput)
         {
             var result = await _agendamentoService.Simular(calcularLocacaoInput);
@@ -39,6 +42,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpPost]
         [Route("Agendar")]
+        //[Authorize(Roles = "Cliente, Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> Alugar([FromBody] CalcularLocacaoInput input)
         {
             var path = Startup.ContentRoot;
@@ -56,6 +61,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
 
         [HttpPost]
         [Route(("Devolver"))]
+        //[Authorize(Roles = "Cliente, Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> Devolver([FromBody] DevolucaoInput input)
         {
             var path = Startup.ContentRoot;

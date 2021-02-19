@@ -36,9 +36,9 @@ namespace LocacaoVeiculosApi.Services
             return new EntityResponse((IEntity) new UsuarioJwt()
             {
                 id = usuario.Id,
-                nome = usuario.Nome,
-                login = usuario.CpfMatricula,
-                tipoUsuario = usuario.TipoUsuario.ToString(),
+                Nome = usuario.Nome,
+                CpfMatricula = usuario.CpfMatricula,
+                TipoUsuario = usuario.TipoUsuario.ToString(),
                 Token = token.GerarToken(usuario)
             });
         }
@@ -58,12 +58,12 @@ namespace LocacaoVeiculosApi.Services
                 return new EntityResponse("Usuário/Senha Inválido");
             }
 
-            return new EntityResponse((IEntity) new UsuarioJwt()
+            return new EntityResponse((IEntity) new ClienteJwt()
             {
                 id = usuario.Id,
-                nome = usuario.Nome,
-                login = usuario.CpfMatricula,
-                tipoUsuario = usuario.TipoUsuario.ToString(),
+                Nome = usuario.Nome,
+                Cpf = usuario.CpfMatricula,
+                TipoUsuario = usuario.TipoUsuario.ToString(),
                 Token = token.GerarToken(usuario)
             });
         }
@@ -83,12 +83,12 @@ namespace LocacaoVeiculosApi.Services
                 return new EntityResponse("Usuário/Senha Inválido");
             }
 
-            return new EntityResponse((IEntity) new UsuarioJwt()
+            return new EntityResponse((IEntity) new OperadorJwt()
             {
                 id = usuario.Id,
-                nome = usuario.Nome,
-                login = usuario.CpfMatricula,
-                tipoUsuario = usuario.TipoUsuario.ToString(),
+                Nome = usuario.Nome,
+                Matricula = usuario.CpfMatricula,
+                TipoUsuario = usuario.TipoUsuario.ToString(),
                 Token = token.GerarToken(usuario)
             });
         }

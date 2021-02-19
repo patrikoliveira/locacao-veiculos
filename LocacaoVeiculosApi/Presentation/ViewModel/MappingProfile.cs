@@ -21,6 +21,10 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
                 .ForMember(u => u.Cpf, opt => opt.MapFrom(m => m.CpfMatricula));
             CreateMap<UsuarioLogin, OperadorLogin>()
                 .ForMember(u => u.Matricula, opt => opt.MapFrom(m => m.CpfMatricula));
+                CreateMap<UsuarioJwt, ClienteJwt>()
+                .ForMember(u => u.Cpf, opt => opt.MapFrom(m => m.CpfMatricula));
+            CreateMap<UsuarioJwt, OperadorJwt>()
+                .ForMember(u => u.Matricula, opt => opt.MapFrom(m => m.CpfMatricula));
 
             CreateMap<CreateCategoriaDto, Categoria>();
             CreateMap<CreateMarcaDto, Marca>();
@@ -38,6 +42,8 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<OperadorLogin, Usuario>();
             CreateMap<ClienteLogin, UsuarioLogin>();
             CreateMap<OperadorLogin, UsuarioLogin>();
+            CreateMap<ClienteJwt, UsuarioJwt>();
+            CreateMap<OperadorJwt, UsuarioJwt>();
         }
     }
 }

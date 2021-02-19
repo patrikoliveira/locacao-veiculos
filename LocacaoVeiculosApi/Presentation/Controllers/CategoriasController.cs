@@ -6,6 +6,7 @@ using LocacaoVeiculosApi.Presentation.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using LocacaoVeiculosApi.Extensions;
 using LocacaoVeiculosApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
@@ -23,6 +24,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IEnumerable<CategoriaDto>> GetAllAsync()
         {
             var categorias = await _categoriaService.ListAsync();
@@ -30,6 +33,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpGet("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _categoriaService.GetAsync(x=> x.Id == id);
@@ -43,6 +48,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPost]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] CreateCategoriaDto resource)
         {
             if (!ModelState.IsValid)
@@ -62,6 +69,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPut("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutAsync(int id, [FromBody] CreateCategoriaDto resource)
         {
             if (!ModelState.IsValid)
@@ -81,6 +90,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpDelete("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _categoriaService.DeleteAsync(id);
