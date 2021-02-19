@@ -27,6 +27,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IEnumerable<VeiculoDto>> GetAllAsync()
         {
             var veiculos = await _veiculoService.ListAsync(v=>v.Marca, v=>v.Modelo, v=>v.Categoria);
@@ -34,6 +36,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _veiculoService.GetAsync(x=> x.Id == id, v=>v.Marca, v=>v.Modelo, v=>v.Categoria);
@@ -46,6 +50,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPost]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] CreateVeiculoDto resource)
         {
             if (!ModelState.IsValid)
@@ -65,6 +71,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPut("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutAsync(int id, [FromBody] CreateVeiculoDto resource)
         {
             if (!ModelState.IsValid)
@@ -84,6 +92,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpDelete("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _veiculoService.DeleteAsync(id);
@@ -98,6 +108,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         
         [HttpGet]
         [Route(("Disponiveis"))]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IEnumerable<VeiculoOutputRepository>> GetAllDisponivelAsync()
         {
             var veiculos = await _vService.GetVeiculosDisponiveisAsync();

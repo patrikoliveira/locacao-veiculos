@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
-using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Entities.Exceptions;
-using LocacaoVeiculosApi.Domain.Services;
 using LocacaoVeiculosApi.Infra.Authentication;
 using LocacaoVeiculosApi.Presentation.ViewModel;
+using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +13,10 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     [Route("/api/[controller]")]
     public class LoginController : Controller
     {
-        private readonly IUsuarioService<Usuario> _usuarioService;
+        private readonly LoginService _usuarioService;
         private readonly IMapper _mapper;
 
-        public LoginController(IUsuarioService<Usuario> usuarioService, IMapper mapper)
+        public LoginController(LoginService usuarioService, IMapper mapper)
         {
             _usuarioService = usuarioService;
             _mapper = mapper;
@@ -26,11 +25,11 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [HttpPost]
         [Route("/usuario/login")]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(Usuario userLogin)
+        public async Task<ActionResult> Login(UsuarioLogin userLogin)
         {  
             try
             {
-                return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
+                return StatusCode(200, await _usuarioService.Logar(userLogin, new Token()));
             }
             catch (UsuarioNotFound err)
             {
@@ -47,7 +46,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         {
             try
             {
-                return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
+                return StatusCode(200, await _usuarioService.LogarCliente(userLogin, new Token()));
             }
             catch (UsuarioNotFound err)
             {
@@ -65,7 +64,7 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         {
             try
             {
-                return StatusCode(200, await _usuarioService.Login(userLogin, new Token()));
+                return StatusCode(200, await _usuarioService.LogarOperador(userLogin, new Token()));
             }
             catch (UsuarioNotFound err)
             {
@@ -75,6 +74,5 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
                 });
             }
         }
-
     }
 }

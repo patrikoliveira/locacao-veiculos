@@ -6,6 +6,7 @@ using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Domain.Repositories;
 using LocacaoVeiculosApi.Domain.Services.Communication;
+using LocacaoVeiculosApi.Infrastructure.PdfService;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 
@@ -56,7 +57,7 @@ namespace LocacaoVeiculosApi.Services
             });
         }
 
-        public async Task<EntityResponse> Alugar(CalcularLocacaoInput input)
+        public async Task<EntityResponse> Alugar(CalcularLocacaoInput input, IGeraPdf pdfWriter, string pathPDF)
         {
             if (input.UsuarioId == 0)
             {
@@ -100,6 +101,8 @@ namespace LocacaoVeiculosApi.Services
             {
                 await _agendamentoRepository.AddAsync(agendamento);
                 await _unitOfWork.CompleteAsync();
+                var veiculo = await _veiculoRepository.Filter(x=> x.Id == input.VeiculoId, v=>v.Marca, v=>v.Modelo, v=>v.Categoria);
+                new PdfService(pdfWriter).ContratoAluguelPdf(agendamento, veiculo.First(), pathPDF);
 
                 return new EntityResponse((IEntity) agendamento);
             }
@@ -109,7 +112,7 @@ namespace LocacaoVeiculosApi.Services
             }
         }
 
-        public async Task<EntityResponse> Devolver(DevolucaoInput resource)
+        public async Task<EntityResponse> Devolver(DevolucaoInput resource, IGeraPdf pdfWriter, string pathPDF)
         {
             var agendamento = await _agendamentoRepository.FindByIdAsync(resource.AgendamentoId);
 
@@ -161,7 +164,9 @@ namespace LocacaoVeiculosApi.Services
                 agendamento.ChecklistId = checklist.Id;
                 _agendamentoRepository.Update(agendamento);
                 await _unitOfWork.CompleteAsync();
-                
+                var veiculo = await _veiculoRepository.Filter(x=> x.Id == agendamento.VeiculoId, v=>v.Marca, v=>v.Modelo, v=>v.Categoria);
+                new PdfService(pdfWriter).ContratoPagamentoPdf(agendamento, veiculo.First(), pathPDF);
+
                 return new EntityResponse(agendamento);
             }
             catch (Exception e)

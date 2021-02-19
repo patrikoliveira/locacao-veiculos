@@ -1,11 +1,11 @@
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {
-    public record OperadorJwt
+    public class OperadorJwt
     {
         public int id {get;set;}
-        public string nome {get;set;}
-        public string tipoUsuario {get;set;}
-        public string Matricula { get; internal set; }
-        public string Token { get; internal set; }
+        public string Nome {get;set;}
+        public string Matricula { get; set; }
+        public string TipoUsuario {get;set;}
+        public string Token { get; set; }
     }
 }

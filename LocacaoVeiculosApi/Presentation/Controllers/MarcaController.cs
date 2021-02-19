@@ -5,6 +5,7 @@ using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Extensions;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocacaoVeiculosApi.Presentation.Controllers
@@ -23,6 +24,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpGet]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IEnumerable<MarcaDto>> GetAllAsync()
         {
             var marcas = await _marcaService.ListAsync();
@@ -30,6 +33,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _marcaService.GetAsync(x=> x.Id == id);
@@ -42,6 +47,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPost]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] CreateMarcaDto resource)
         {
             if (!ModelState.IsValid)
@@ -61,6 +68,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpPut("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutAsync(int id, [FromBody] CreateMarcaDto resource)
         {
             if (!ModelState.IsValid)
@@ -80,6 +89,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         }
         
         [HttpDelete("{id}")]
+        //[Authorize(Roles = "Operador")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _marcaService.DeleteAsync(id);
