@@ -17,6 +17,10 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<Veiculo, VeiculoDto>();
             CreateMap<Endereco, EnderecoDto>();
             CreateMap<Agendamento, AgendamentoDto>();
+            CreateMap<UsuarioLogin, ClienteLogin>()
+                .ForMember(u => u.Cpf, opt => opt.MapFrom(m => m.CpfMatricula));
+            CreateMap<UsuarioLogin, OperadorLogin>()
+                .ForMember(u => u.Matricula, opt => opt.MapFrom(m => m.CpfMatricula));
 
             CreateMap<CreateCategoriaDto, Categoria>();
             CreateMap<CreateMarcaDto, Marca>();
@@ -30,6 +34,10 @@ namespace LocacaoVeiculosApi.Presentation.ViewModel
             CreateMap<CategoriaDto, Categoria>();
             CreateMap<ModeloDto, Modelo>();
             CreateMap<MarcaDto, Marca>();
+            CreateMap<ClienteLogin, Usuario>();
+            CreateMap<OperadorLogin, Usuario>();
+            CreateMap<ClienteLogin, UsuarioLogin>();
+            CreateMap<OperadorLogin, UsuarioLogin>();
         }
     }
 }
