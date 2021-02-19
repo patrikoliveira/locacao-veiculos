@@ -3,14 +3,17 @@ using System.IO;
 using System.Text;
 using AutoMapper;
 using LocacaoVeiculosApi.Domain.Entities;
+using LocacaoVeiculosApi.Domain.Entities.Enums;
 using LocacaoVeiculosApi.Domain.Repositories;
 using LocacaoVeiculosApi.Infrastructure.Database;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,11 +38,18 @@ namespace LocacaoVeiculosApi
         public void ConfigureServices(IServiceCollection services)
         {
             JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
-            //services.AddDbContext<EntityContext>(options => options.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
-
             var key = Encoding.ASCII.GetBytes(jAppSettings["JwtToken"].ToString());
+            
+            services.AddControllersWithViews();
+            services.AddMvc(config =>
+            {
+                 var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
 
-           services.AddAuthentication(x =>
+            services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,9 +65,13 @@ namespace LocacaoVeiculosApi
                     ValidateAudience = false
                 };
             });
-            
-            services.AddControllersWithViews();
-            services.AddMvc();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(TipoUsuario.Cliente.ToString(), policy => policy.RequireClaim(TipoUsuario.Cliente.ToString()));
+                options.AddPolicy(TipoUsuario.Operador.ToString(), policy => policy.RequireClaim(TipoUsuario.Operador.ToString()));
+            });
+
             services.AddDbContext<EntityContext>(opt =>
                 opt.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
 
