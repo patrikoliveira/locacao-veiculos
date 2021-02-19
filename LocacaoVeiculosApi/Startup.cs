@@ -37,8 +37,8 @@ namespace LocacaoVeiculosApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
-            var key = Encoding.ASCII.GetBytes(jAppSettings["JwtToken"].ToString());
+           //JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
+            //var key = Encoding.ASCII.GetBytes(jAppSettings["JwtToken"].ToString());
             
             services.AddControllersWithViews();
             services.AddMvc(config =>
@@ -49,7 +49,7 @@ namespace LocacaoVeiculosApi
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            services.AddAuthentication(x =>
+            /*services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,7 +70,7 @@ namespace LocacaoVeiculosApi
             {
                 options.AddPolicy(TipoUsuario.Cliente.ToString(), policy => policy.RequireClaim(TipoUsuario.Cliente.ToString()));
                 options.AddPolicy(TipoUsuario.Operador.ToString(), policy => policy.RequireClaim(TipoUsuario.Operador.ToString()));
-            });
+            });*/
 
             services.AddDbContext<EntityContext>(opt =>
                 opt.UseNpgsql(Configuration.GetConnectionString("ConnectionString")));
@@ -134,8 +134,8 @@ namespace LocacaoVeiculosApi
                 .AllowAnyHeader()
             );
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
