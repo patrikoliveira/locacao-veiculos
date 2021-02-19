@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using LocacaoVeiculosApi.Infrastructure.PdfService;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using LocacaoVeiculosApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [Route("Agendar")]
         public async Task<IActionResult> Alugar([FromBody] CalcularLocacaoInput input)
         {
-            var result = await _agendamentoService.Alugar(input);
+            var path = Startup.ContentRoot;
+            var result = await _agendamentoService.Alugar(input, new GeraPdf(), path);
             
             if (!result.Success)
             {
@@ -49,7 +51,8 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
         [Route(("Devolver"))]
         public async Task<IActionResult> Devolver([FromBody] DevolucaoInput input)
         {
-            var result = await _agendamentoService.Devolver(input);
+            var path = Startup.ContentRoot;
+            var result = await _agendamentoService.Devolver(input, new GeraPdf(), path);
             
             if (!result.Success)
             {

@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Infrastructure.PdfService;
@@ -14,13 +13,8 @@ namespace LocacaoVeiculosApi.Services
 
         public IGeraPdf pdfWriter { get; }
 
-        public async Task<string> ContratoAluguelPdf(Agendamento agendamento, IEntityRepository entityRepository, string path)
+        public string ContratoAluguelPdf(Agendamento agendamento, Veiculo veiculo, string path)
         {
-            var veiculo = await entityRepository.FindById<Veiculo>(agendamento.VeiculoId);
-            var categoria = await entityRepository.FindById<Categoria>(veiculo.CategoriaId);
-            var modelo = await entityRepository.FindById<Modelo>(veiculo.ModeloId);
-            var marca = await entityRepository.FindById<Marca>(veiculo.MarcaId);
-
             var body = "<hr>";
             body += "<h3>Reserva</h3>";
             body += "<hr>";
@@ -33,9 +27,9 @@ namespace LocacaoVeiculosApi.Services
             body += "<h3>Reserva do veículo</h3>";
             body += "<hr>";
             body += $"Placa: {veiculo.Placa}<br>";
-            body += $"Marca: {marca.Nome}<br>";
-            body += $"Modelo: {modelo.Nome}<br>";
-            body += $"Categoria: {categoria.Nome}<br>";
+            body += $"Marca: {veiculo.Marca.Nome}<br>";
+            body += $"Modelo: {veiculo.Modelo.Nome}<br>";
+            body += $"Categoria: {veiculo.Categoria.Nome}<br>";
             body += $"Capacidade do tanque: {veiculo.CapacidadeTanque}<br>";
             body += $"Capacidade do Porta Malas: {veiculo.CapacidadePortaMalas}";
             body += "<hr>";
@@ -45,12 +39,8 @@ namespace LocacaoVeiculosApi.Services
             return pdfWriter.Build(path, body);
         }
 
-        public async Task<string> ContratoPagamentoPdf(Agendamento agendamento, IEntityRepository entityRepository, string path)
+        public string ContratoPagamentoPdf(Agendamento agendamento, Veiculo veiculo, string path)
         {
-            var veiculo = await entityRepository.FindById<Veiculo>(agendamento.VeiculoId);
-            var categoria = await entityRepository.FindById<Categoria>(veiculo.CategoriaId);
-            var modelo = await entityRepository.FindById<Modelo>(veiculo.ModeloId);
-            var marca = await entityRepository.FindById<Marca>(veiculo.MarcaId);
             var checklist = agendamento.Checklist;
 
             var body = "<hr>";
@@ -78,9 +68,9 @@ namespace LocacaoVeiculosApi.Services
             body += "<h3>Reserva do veículo</h3>";
             body += "<hr>";
             body += $"Placa: {veiculo.Placa}<br>";
-            body += $"Marca: {marca.Nome}<br>";
-            body += $"Modelo: {modelo.Nome}<br>";
-            body += $"Categoria: {categoria.Nome}<br>";
+            body += $"Marca: {veiculo.Marca.Nome}<br>";
+            body += $"Modelo: {veiculo.Modelo.Nome}<br>";
+            body += $"Categoria: {veiculo.Categoria.Nome}<br>";
             body += $"Capacidade do tanque: {veiculo.CapacidadeTanque}<br>";
             body += $"Capacidade do Porta Malas: {veiculo.CapacidadePortaMalas}";
             body += "<hr>";
