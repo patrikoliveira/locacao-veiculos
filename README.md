@@ -41,7 +41,7 @@ Seguimos uma linha Clean Architecture, para facilitar a mudança de sistema mono
 
 
 ------------
-####1. Entidades
+#### 1. Entidades
 - Agendamento
 - Categoria
 - Checklist
@@ -55,24 +55,24 @@ Seguimos uma linha Clean Architecture, para facilitar a mudança de sistema mono
 - Veiculo
 - TipoUsuario *(Enum)*
 
-####2. Autenticação
+#### 2. Autenticação
 - Token *(utilizando Jwt Bearer)*
 
-####3. Banco de Dados
+#### 3. Banco de Dados
 - EntityContext *(DbSets conforme as entidades)*
 
-####4. Repositórios
+#### 4. Repositórios
 - EntityRepository *(CRUD básico e genérico para atender todas as entidades)*
 - VeiculoRepository  *(Listagem específica para a entidade Veiculos - para retornar veículos disponível para aluguel)*
 
-####5. Serviços
+#### 5. Serviços
 - AgendamentoService* (regra de negócio referente ao agendamento/aluguel do carro)*
 - LoginService *(serviço que verifica login e senha, e gera token de acesso)*
 - VeiculoService *(serviço que lista veículos disponíveis para aluguel)*
 - EntityService* (implementação genérica do CRUD utilizado pela maioria das entidades)*
 - PdfService *(serviço que gera o contrato de aluguel no formato PDF)*
 
-####6. Controllers
+#### 6. Controllers
 Classes de Requisições (GET/POST/PUT/DELETE) conforme Entidade
 
 - AgendamentoController
