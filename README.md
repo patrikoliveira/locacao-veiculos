@@ -34,7 +34,7 @@ Desafio Gama Academy - Back-end .NET
 
 ------------
 
-##Estrura do Projeto
+## Estrura do Projeto
 Seguimos uma linha Clean Architecture, para facilitar a mudança de sistema monolítico para microserviços no futuro.
 
 
