@@ -28,7 +28,7 @@ Desafio Gama Academy - Back-end .NET
 - Utilização de cache para listagens/pesquisas
 - Melhorar validação de campos e requisições
 - Melhorar tratamento de erros/respostas das requisições
-	#####Melhorias Situacionais:
+	##### Melhorias Situacionais:
 	- **API para 1000 usuários:** 1- utilização de tecnologias e ferramentas open source; 2- manter estrutura monolítica para evitar custos; 3- levantamento e testes para identificar gargalos; 4- manter o sistema com o minímo de custo possível, gerando economia para o negócio.
 	- **API para 1000 usuários:** 1- levantamento de conexões simultâneas no sistema; 2- migração do core do sistema para microserviço e, futuramente, transformar o sistema todo com essa arquitetura; 3- utilizar comunicação por mensageria; 4- utilização de cache para otimizar pesquisas e listagens.
 
