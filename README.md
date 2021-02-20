@@ -37,28 +37,10 @@ Desafio Gama Academy - Back-end .NET
 ##Estrura do Projeto
 Seguimos uma linha Clean Architecture, para facilitar a mudança de sistema monolítico para microserviços no futuro.
 
+![Estrutura do Projeto](https://ibb.co/JQmhf0c "Estrutura do Projeto")
 
-📂 Domain
-	L📂 Authentication
-	L📂 Entities
-		L📂 Enums
-		L📂 Exceptions
-	L📂 Repositories
-	L📂 Services
-		L📂 Communication
-📂 Infrastructure
-	L📂 Authentication
-	L📂 Database
-	L📂 Pdfservice
-	L📂 Repositories
-📂 Migrations *(gerado automaticamente pelo Entity Framework)*
-📂 Presentation
-	L📂 Controllers
-	L📂 Viewmodel
-📂 Services
 
 ------------
-###Projeto: 
 ####1. Entidades
 - Agendamento
 - Categoria
