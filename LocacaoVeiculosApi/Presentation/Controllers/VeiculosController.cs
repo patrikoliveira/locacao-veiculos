@@ -16,7 +16,6 @@ namespace LocacaoVeiculosApi.Presentation.Controllers
     {
         private readonly EntityService<Veiculo> _veiculoService;
         private readonly VeiculoService _vService;
-        private readonly EntityService<Veiculo> _veiculoEspecializadoRepository;
         private readonly IMapper _mapper;
 
         public VeiculosController(EntityService<Veiculo> veiculoService, VeiculoService vService, IMapper mapper)

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Infrastructure.PdfService;
 

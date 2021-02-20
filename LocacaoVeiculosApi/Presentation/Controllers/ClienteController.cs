@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using LocacaoVeiculosApi.Extensions;
 
-
 namespace LocacaoVeiculosApi.Presentation.Controllers
 {
     [ApiController]

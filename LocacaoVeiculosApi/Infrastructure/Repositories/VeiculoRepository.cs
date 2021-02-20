@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.Entities;
 using LocacaoVeiculosApi.Infrastructure.Database;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 using Microsoft.EntityFrameworkCore;

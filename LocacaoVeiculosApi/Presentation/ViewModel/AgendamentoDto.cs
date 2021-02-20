@@ -1,5 +1,4 @@
 using System;
-using LocacaoVeiculosApi.Domain.Entities;
 
 namespace LocacaoVeiculosApi.Presentation.ViewModel
 {

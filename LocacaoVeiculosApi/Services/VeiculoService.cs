@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LocacaoVeiculosApi.Domain.Entities;
-using LocacaoVeiculosApi.Domain.Repositories;
 using LocacaoVeiculosApi.Infrastructure.Repositories;
 using LocacaoVeiculosApi.Presentation.ViewModel;
 

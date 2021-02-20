@@ -1,5 +1,4 @@
 using System;
-using SelectPdf;
 
 namespace LocacaoVeiculosApi.Infrastructure.PdfService
 {
